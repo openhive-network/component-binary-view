@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import './BinaryView.css' // Global styles shared between all components
-import { IBinaryView } from './types'
+import { type IBinaryView } from './types'
 import HexProp from './components/HexProp.vue'
 import KeyProp from './components/KeyProp.vue'
 import ActionButtons from './components/ActionButtons.vue'
@@ -17,12 +17,12 @@ store.indexBinaryData(props.data)
 <template>
   <div class="binary-container">
     <div class="left-pane">
-      <div>
+      <div class="left-pane-hex-data">
         <span v-for="(offset, index) in props.data.offsets" :key="index">
           <HexProp :data="offset" />
         </span>
       </div>
-      <ActionButtons />
+      <ActionButtons class="left-pane-actions-buttons" />
     </div>
     <div class="right-pane">
       <div v-for="(offset, index) in props.data.offsets" :key="index">
@@ -45,7 +45,11 @@ store.indexBinaryData(props.data)
   justify-content: center;
 }
 
-.left-pane > div {
+.left-pane-actions-buttons {
+  flex-grow: 0;
+}
+
+.left-pane > .left-pane-hex-data {
   display: inline-block;
   width: 200px;
   line-height: normal;

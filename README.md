@@ -9,7 +9,7 @@ Binary view representation of the hexadecimal values
 
 ## Usage
 
-1. Install [pinia](https://pinia.vuejs.org/getting-started.html#Installation) and introduce it into your codebase (required for the state and our internal binary view store)
+1. Install [pinia](https://pinia.vuejs.org/getting-started.html#Installation), [vuetify](https://www.npmjs.com/package/vuetify) and introduce them into your codebase
 2. Copy files from `src/components/BinaryView` to your components' directory
 3. Example usage:
 
