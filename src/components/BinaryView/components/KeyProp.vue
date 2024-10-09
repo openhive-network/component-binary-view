@@ -19,11 +19,15 @@ const { index, nestedLevel, colors, key, displayValue, range } = store.nextData(
       class="props-key-data"
       @mouseenter="store.setHighligh(range.start, range.end)"
       @mouseleave="store.leaveHighlight()"
-      v-if="range.start !== range.displayEnd"
     >
-      <span :style="colors.css" class="binary-view-force-bold-rarget">{{ key }}</span>
-      <span v-if="props.data.type === 'pod'">: {{ JSON.stringify(displayValue) }}</span>
-      <span v-else-if="displayValue !== undefined">: {{ displayValue }}</span>
+      <span v-if="displayValue === undefined">
+        <span :style="{ ...colors.css, color: 'white', 'padding': '0 3px' }"  class="binary-view-force-bold-rarget">{{ key }}</span>:
+      </span>
+      <span v-else>
+        <span :style="{ ...colors.css, 'padding': '0 3px' }" class="binary-view-force-bold-rarget">{{ key }}</span>
+        <span v-if="props.data.type === 'pod'">: {{ JSON.stringify(displayValue) }}</span>
+        <span v-else>: {{ displayValue }}</span>
+      </span>
     </div>
     <KeyProp
       v-if="props.data.type !== 'pod' && props.data.value.length > 0"

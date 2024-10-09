@@ -51,9 +51,9 @@ export const useBinaryViewStore = defineStore('binaryView', {
     indexNode(node: TNode, prev?: TNode) {
       const index = this.nextIndex('internal_store');
 
-      const nestedLevel = this.nestedLevels[index] = (this.nestedLevels[index - 1] ?? 0) + (prev?.type === 'pod' ? 0 : 1);
+      const nestedLevel = this.nestedLevels[index] = (this.nestedLevels[index - 1] ?? 0) + (prev ? (prev?.type === 'pod' ? 0 : 1) : 0);
+      console.log(node.key, nestedLevel);
       const previousBackgroundColor = nestedLevel === 0 ? { r: 0, g: 0, b: 0, a: 0 } : this.colors[index - 1]?.backgroundColor
-      console.log(node.key);
       this.colors[index] = generateRandomColorSpace(node.key, node.type === 'pod' ? previousBackgroundColor : undefined);
 
       const start = node.offset;
