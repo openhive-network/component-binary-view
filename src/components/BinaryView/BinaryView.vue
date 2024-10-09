@@ -10,7 +10,7 @@ const props = defineProps<{
   data: IBinaryView
 }>()
 
-store.data = props.data
+store.indexBinaryData(props.data)
 </script>
 
 <template>
@@ -45,13 +45,12 @@ store.data = props.data
 
 .left-pane > div {
   display: inline-block;
-  max-width: 250px;
+  width: 200px;
   line-height: normal;
 }
 
 .left-pane,
 .right-pane {
-  width: 50%;
   flex-grow: 1;
   height: 100%;
 }

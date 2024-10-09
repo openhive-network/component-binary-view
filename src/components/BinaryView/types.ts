@@ -1,5 +1,6 @@
 export interface IDataNode {
   key: string;
+  isObject?: false;
   value: string;
   offset: number;
   length: number;

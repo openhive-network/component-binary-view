@@ -5,7 +5,7 @@ import BinaryView from '@/components/BinaryView'
 </script>
 
 <template>
-  <main style="max-width: 800px">
+  <main style="max-width: 1000px">
     <BinaryView :data="data" />
   </main>
 </template>

@@ -1,4 +1,4 @@
-.binary-view-force-bold > span {
+.binary-view-force-bold .binary-view-force-bold-rarget {
   font-weight: 800 !important;
   text-shadow:
     1px 0 rgba(255, 255, 255, 0.1),

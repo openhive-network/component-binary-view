@@ -8,30 +8,28 @@ const props = defineProps<{
   data: IDataNode | IObjectNode
 }>()
 
-const index = store.nextIndex('KeyProp')
-
-const nestedLevel = store.nestedLevels[index]
-const colors = store.colors[index]
-
-const start = props.data.offset
-const end: number | undefined = start + (props.data.objectSize ?? props.data.length)
-let displayEnd: number | undefined = start + (props.data.objectSize ?? props.data.length)
-if (props.data.isObject) {
-  displayEnd = props.data.value[0]?.offset ?? store.data.binary.length
-}
+const { nestedLevel, colors, key, displayValue, range } = store.nextData('KeyProp')
 </script>
 
 <template>
-  <div :class="{ 'binary-view-force-bold': store.shouldHighlight(start, end) }">
-    <span
-      :style="colors.css"
+  <div :class="{ 'binary-view-force-bold': store.shouldHighlight(range.start, range.end) }">
+    <div
+      :style="{ 'margin-left': `${nestedLevel * 16}px` }"
       class="props-key-data"
-      @mouseenter="store.setHighligh(start, end)"
+      @mouseenter="store.setHighligh(range.start, range.end)"
       @mouseleave="store.leaveHighlight()"
-      v-if="start !== displayEnd"
+      v-if="range.start !== range.displayEnd"
     >
-      {{ props.data.key }}
-    </span>
+      <span :style="colors.css" class="binary-view-force-bold-rarget">{{ key }}</span>
+      <span v-if="!props.data.isObject || (props.data.isObject && displayValue !== undefined)"
+        >:
+        {{
+          props.data.isObject && displayValue !== undefined
+            ? displayValue
+            : JSON.stringify(displayValue)
+        }}</span
+      >
+    </div>
     <KeyProp
       v-if="props.data.isObject && props.data.value.length > 0"
       v-for="(data, propsIndex) in props.data.value"
