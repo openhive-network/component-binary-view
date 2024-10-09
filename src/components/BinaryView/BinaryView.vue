@@ -3,6 +3,7 @@ import './BinaryView.css' // Global styles shared between all components
 import { IBinaryView } from './types'
 import HexProp from './components/HexProp.vue'
 import KeyProp from './components/KeyProp.vue'
+import ActionButtons from './components/ActionButtons.vue'
 import { useBinaryViewStore } from './store'
 const store = useBinaryViewStore()
 
@@ -21,6 +22,7 @@ store.indexBinaryData(props.data)
           <HexProp :data="offset" />
         </span>
       </div>
+      <ActionButtons />
     </div>
     <div class="right-pane">
       <div v-for="(offset, index) in props.data.offsets" :key="index">

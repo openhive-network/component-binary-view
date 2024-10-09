@@ -10,6 +10,7 @@ export interface IBufferRangeData {
    */
   displayEnd: number;
   hex: string[] | null; // null if the display range is empty (start === displayEnd)
+  fullHexString: string;
 }
 
 export interface IIndexData {
@@ -20,6 +21,8 @@ export interface IIndexData {
   colors: TGenerateRandomColorSpaceOutput;
   range: IBufferRangeData;
 }
+
+const hex2bin = (hex: string) => (parseInt(hex, 16).toString(2)).padStart(8, '0');
 
 export const useBinaryViewStore = defineStore('binaryView', {
   state: () => ({
@@ -55,9 +58,10 @@ export const useBinaryViewStore = defineStore('binaryView', {
       const start = node.offset;
       const end = start + (node.isObject ? node.objectSize : node.length);
       const displayEnd: number | undefined = node.isObject ? (node.value[0]?.offset ?? this.data.binary.length) : end;
+      const fullHexString = this.data.binary.slice(start, end);
       const hex = start === displayEnd ? null : this.data.binary.slice(start, displayEnd).match(/.{1,2}/g);
 
-      this.rangeData[index] = { start, end, displayEnd, hex };
+      this.rangeData[index] = { start, end, displayEnd, hex, fullHexString };
 
       this.nodeKeys[index] = node.key;
       if (!node.isObject)
@@ -101,6 +105,20 @@ export const useBinaryViewStore = defineStore('binaryView', {
     leaveHighlight() {
       this.highlightedRange.start = -1;
       this.highlightedRange.end = -1;
+    },
+    copyHex(index?: number) { // When no index provided - copy entire buffer
+      const hex = index === undefined ? this.data.binary : this.rangeData[index].fullHexString;
+
+      navigator.clipboard.writeText(hex);
+    },
+    copyBinary(index?: number) { // When no index provided - copy entire buffer
+      const hex = (index === undefined ? this.data.binary : this.rangeData[index].fullHexString).match(/.{1,2}/g) as RegExpMatchArray;
+
+      const bytes = new Uint8Array(hex as any).map(byte => parseInt(String(byte), 16));
+
+      const binaryString = String.fromCharCode.apply(null, bytes as any);
+
+      navigator.clipboard.writeText(binaryString);
     }
   }
 });
