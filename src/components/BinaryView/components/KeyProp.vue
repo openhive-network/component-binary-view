@@ -8,6 +8,17 @@ const props = defineProps<{
 }>()
 
 const { index, nestedLevel, colors, key, displayValue, range } = store.nextData('KeyProp')
+
+const normalizeHexValue = (data: number) => {
+  return (
+    '0x' +
+    data
+      .toString(16)
+      .match(/.{1,2}/g)!
+      .map((node) => node.padStart(2, '0'))
+      .join('')
+  )
+}
 </script>
 
 <template>
@@ -20,11 +31,31 @@ const { index, nestedLevel, colors, key, displayValue, range } = store.nextData(
       @mouseenter="store.setHighligh(range.start, range.end)"
       @mouseleave="store.leaveHighlight()"
     >
+      <v-tooltip location="top">
+        <template v-slot:activator="{ props }">
+          <v-icon class="mr-1" size="xs" v-bind="props">mdi-information-slab-circle-outline</v-icon>
+        </template>
+        <div class="keyprop-details">
+          <div>
+            <span class="mr-2">Size: </span><b>{{ range.end - range.start }}B</b>
+          </div>
+          <div>
+            <span class="mr-2">Start: </span><b>{{ normalizeHexValue(range.start) }}</b>
+          </div>
+          <div>
+            <span class="mr-2">End: </span><b>{{ normalizeHexValue(range.end) }}</b>
+          </div>
+        </div>
+      </v-tooltip>
       <span v-if="displayValue === undefined">
-        <span :style="{ ...colors.css, color: 'white', 'padding': '0 3px' }"  class="binary-view-force-bold-rarget">{{ key }}</span>:
+        <span
+          :style="{ ...colors.css, color: 'white' }"
+          class="px-1 binary-view-force-bold-rarget"
+          >{{ key }}</span
+        >:
       </span>
-      <span v-else>
-        <span :style="{ ...colors.css, 'padding': '0 3px' }" class="binary-view-force-bold-rarget">{{ key }}</span>
+      <span v-else class="pr-1">
+        <span :style="colors.css" class="px-1 binary-view-force-bold-rarget">{{ key }}</span>
         <span v-if="props.data.type === 'pod'">: {{ JSON.stringify(displayValue) }}</span>
         <span v-else>: {{ displayValue }}</span>
       </span>
@@ -41,5 +72,12 @@ const { index, nestedLevel, colors, key, displayValue, range } = store.nextData(
 <style scoped>
 .props-key-data {
   cursor: pointer;
+}
+.keyprop-details > div {
+  display: flex;
+  justify-content: space-between;
+}
+.keyprop-details > div > b {
+  font-family: 'Courier New', Courier, monospace;
 }
 </style>

@@ -15,18 +15,20 @@ store.indexBinaryData(props.data)
 </script>
 
 <template>
-  <div class="binary-container">
-    <div class="left-pane">
-      <ActionButtons class="mr-3 left-pane-actions-buttons" />
-      <div class="left-pane-hex-data">
-        <span v-for="(offset, index) in props.data.offsets" :key="index">
-          <HexProp :data="offset" />
-        </span>
+  <div>
+    <div class="binary-container">
+      <div class="left-pane">
+        <ActionButtons class="mr-3 left-pane-actions-buttons" />
+        <div class="left-pane-hex-data">
+          <span v-for="(offset, index) in props.data.offsets" :key="index">
+            <HexProp :data="offset" />
+          </span>
+        </div>
       </div>
-    </div>
-    <div class="right-pane">
-      <div v-for="(offset, index) in props.data.offsets" :key="index">
-        <KeyProp :data="offset" />
+      <div class="right-pane">
+        <div v-for="(offset, index) in props.data.offsets" :key="index">
+          <KeyProp :data="offset" />
+        </div>
       </div>
     </div>
   </div>
