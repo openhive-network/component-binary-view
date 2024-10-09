@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { generateRandomColorSpace, type TGenerateRandomColorSpaceOutput } from './utils/colors'
-import type { IBinaryView, IDataNode, IObjectNode } from './types';
+import type { IBinaryView, TNode } from './types';
 
 export interface IBufferRangeData {
   start: number;
@@ -48,30 +48,34 @@ export const useBinaryViewStore = defineStore('binaryView', {
   },
   actions: {
     /* Private actions: */
-    indexNode(node: IDataNode | IObjectNode) {
+    indexNode(node: TNode, prev?: TNode) {
       const index = this.nextIndex('internal_store');
 
-      const nestedLevel = this.nestedLevels[index] = (this.nestedLevels[index - 1] ?? 0) + (node.isObject ? 1 : 0);
+      const nestedLevel = this.nestedLevels[index] = (this.nestedLevels[index - 1] ?? 0) + (prev?.type === 'pod' ? 0 : 1);
       const previousBackgroundColor = nestedLevel === 0 ? { r: 0, g: 0, b: 0, a: 0 } : this.colors[index - 1]?.backgroundColor
-      this.colors[index] = generateRandomColorSpace(node.key, node.isObject ? undefined : previousBackgroundColor);
+      console.log(node.key);
+      this.colors[index] = generateRandomColorSpace(node.key, node.type === 'pod' ? previousBackgroundColor : undefined);
 
       const start = node.offset;
-      const end = start + (node.isObject ? node.objectSize : node.length);
-      const displayEnd: number | undefined = node.isObject ? (node.value[0]?.offset ?? this.data.binary.length) : end;
+      const end = start + node.size;
+      const displayEnd: number | undefined = node.type === 'pod' ? end : (node.value[0]?.offset ?? this.data.binary.length);
       const fullHexString = this.data.binary.slice(start, end);
       const hex = start === displayEnd ? null : this.data.binary.slice(start, displayEnd).match(/.{1,2}/g);
 
       this.rangeData[index] = { start, end, displayEnd, hex, fullHexString };
 
       this.nodeKeys[index] = node.key;
-      if (!node.isObject)
+      if (node.type === 'pod')
         this.nodeValues[index] = node.value;
-      else if (node.isObject && node.value[0].key === '0') // is Array
-        this.nodeValues[index] = `Length: ${node.value.length}`;
+      else if (node.type === 'array')
+        this.nodeValues[index] = `Length: ${node.length}`;
 
-      if (node.isObject)
-        for (const child of node.value)
-          this.indexNode(child);
+      prev = node;
+      if (node.type !== 'pod')
+        for (const child of node.value) {
+          this.indexNode(child, prev);
+          prev = child;
+        }
     },
     nextIndex(indexingKey: string): number {
       if (this.currentIndex[indexingKey] === undefined)

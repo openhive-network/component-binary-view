@@ -17,12 +17,12 @@ store.indexBinaryData(props.data)
 <template>
   <div class="binary-container">
     <div class="left-pane">
+      <ActionButtons class="mr-3 left-pane-actions-buttons" />
       <div class="left-pane-hex-data">
         <span v-for="(offset, index) in props.data.offsets" :key="index">
           <HexProp :data="offset" />
         </span>
       </div>
-      <ActionButtons class="left-pane-actions-buttons" />
     </div>
     <div class="right-pane">
       <div v-for="(offset, index) in props.data.offsets" :key="index">

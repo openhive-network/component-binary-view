@@ -1,20 +1,28 @@
-export interface IDataNode {
+interface INode {
   key: string;
-  isObject?: false;
-  value: string;
   offset: number;
-  length: number;
+  size: number;
 }
 
-export interface IObjectNode {
-  key: string;
-  isObject: true;
-  offset: number;
-  objectSize: number;
-  value: Array<IDataNode | IObjectNode>
+export interface IDataNode extends INode {
+  type: "pod";
+  value: string;
+}
+
+export interface IObjectNode extends INode {
+  type: "object";
+  value: Array<TNode>
 };
+
+export interface IArrayNode extends INode {
+  type: "array";
+  length: number;
+  value: Array<TNode>
+};
+
+export type TNode = IDataNode | IObjectNode | IArrayNode;
 
 export interface IBinaryView {
   binary: string;
-  offsets: Array<IDataNode | IObjectNode>;
+  offsets: Array<TNode>;
 }

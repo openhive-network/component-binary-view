@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import data from '@/assets/data.json'
+import data from '@/assets/data'
 
 import BinaryView from '@/components/BinaryView'
 </script>

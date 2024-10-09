@@ -1,19 +1,20 @@
 <script setup lang="ts">
-import { IDataNode, IObjectNode } from '../types'
-import { generateRandomColorSpace } from '../utils/colors'
+import type { TNode } from '../types'
 import { useBinaryViewStore } from '../store'
 const store = useBinaryViewStore()
 
 const props = defineProps<{
-  data: IDataNode | IObjectNode
+  data: TNode
 }>()
 
-const { nestedLevel, colors, displayValue, range } = store.nextData('HexProp')
+const { index, colors, range } = store.nextData('HexProp')
 </script>
 
 <template>
   <span :class="{ 'binary-view-force-bold': store.shouldHighlight(range.start, range.end) }">
     <span
+      @click="store.copyBinary(index)"
+      v-on:click.ctrl="store.copyHex(index)"
       :style="colors.css"
       @mouseenter="store.setHighligh(range.start, range.end)"
       @mouseleave="store.leaveHighlight()"
@@ -25,7 +26,7 @@ const { nestedLevel, colors, displayValue, range } = store.nextData('HexProp')
       </span>
     </span>
     <HexProp
-      v-if="props.data.isObject && props.data.value.length > 0"
+      v-if="props.data.type !== 'pod' && props.data.value.length > 0"
       v-for="(data, propsIndex) in props.data.value"
       :key="propsIndex"
       :data="data"

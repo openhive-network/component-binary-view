@@ -4,7 +4,7 @@ Binary view representation of the hexadecimal values
 
 ## Important files
 
-- [`src/assets/data.json`](src/assets/data.json) - JSON representation of the Transaction "retrieved" from the Wax backend
+- [`src/assets/data.ts`](src/assets/data.ts) - JSON representation of the Transaction "retrieved" from the Wax backend
 - [`src/components/BinaryView`](src/components/BinaryView) - directory containing main component files
 
 ## Usage
@@ -15,7 +15,7 @@ Binary view representation of the hexadecimal values
 
 ```vue
 <script setup lang="ts">
-import data from '@/assets/data.json'
+import data from '@/assets/data'
 import BinaryView from '@/components/BinaryView'
 </script>
 
