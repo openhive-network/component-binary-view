@@ -10,6 +10,7 @@ export interface IObjectNode {
   isObject: true;
   offset: number;
   objectSize: number;
+  value: Array<IDataNode | IObjectNode>
 };
 
 export interface IBinaryView {
