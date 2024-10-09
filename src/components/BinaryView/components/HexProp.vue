@@ -8,11 +8,11 @@ const props = defineProps<{
   data: IDataNode | IObjectNode
 }>()
 
-const index = store.currentIndex
-store.nextIndex()
+const index = store.nextIndex('HexProp')
 
 const nestedLevel = (store.nestedLevels[index] =
   (store.nestedLevels[index - 1] ?? 0) + (props.data.isObject ? 1 : 0))
+
 const previousBackgroundColor =
   nestedLevel === 0 ? { r: 0, g: 0, b: 0, a: 0 } : store.colors[index - 1]?.backgroundColor
 
@@ -32,8 +32,9 @@ const hex = start === displayEnd ? '' : store.data.binary.slice(start, displayEn
 </script>
 
 <template>
-  <span :style="colors.css" :class="{ 'force-bold': store.shouldHighlight(start, end) }">
+  <span :class="{ 'binary-view-force-bold': store.shouldHighlight(start, end) }">
     <span
+      :style="colors.css"
       @mouseenter="store.setHighligh(start, end)"
       @mouseleave="store.leaveHighlight()"
       class="bytes-group"
@@ -56,18 +57,9 @@ const hex = start === displayEnd ? '' : store.data.binary.slice(start, displayEn
 <style scoped>
 .bytes-group {
   cursor: pointer;
-  user-select: none;
   word-break: break-word;
 }
 .single-byte {
   padding: 0 3px;
-}
-.force-bold > span {
-  font-weight: 700 !important;
-  text-shadow:
-    -0.8px 0 rgba(255, 255, 255, 0.1),
-    0 0.8px rgba(255, 255, 255, 0.1),
-    0.8px 0 rgba(255, 255, 255, 0.1),
-    0 -0.8px rgba(255, 255, 255, 0.1);
 }
 </style>

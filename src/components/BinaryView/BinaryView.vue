@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import './BinaryView.css' // Global styles shared between all components
 import { IBinaryView } from './types'
 import HexProp from './components/HexProp.vue'
 import KeyProp from './components/KeyProp.vue'
@@ -34,6 +35,7 @@ store.data = props.data
   font-family: 'Courier New', Courier, monospace;
   display: flex;
   flex-direction: row;
+  user-select: none;
 }
 
 .left-pane {
