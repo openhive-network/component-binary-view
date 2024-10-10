@@ -37,8 +37,9 @@ export const useBinaryViewStore = defineStore('binaryView', {
     highlightedRange: {
       start: -1,
       end: -1
-    }
+    },
     /* Public props: */
+    bytesInRow: -1
   }),
   getters: {
     /* Public getters: */

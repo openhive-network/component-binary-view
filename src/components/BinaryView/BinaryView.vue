@@ -9,9 +9,11 @@ const store = useBinaryViewStore()
 
 const props = defineProps<{
   data: IBinaryView
+  bytesInRow?: number
 }>()
 
 store.indexBinaryData(props.data)
+store.bytesInRow = props.bytesInRow || 16
 </script>
 
 <template>
@@ -19,7 +21,7 @@ store.indexBinaryData(props.data)
     <div class="binary-container">
       <div class="left-pane">
         <ActionButtons class="mr-3 left-pane-actions-buttons" />
-        <div class="left-pane-hex-data">
+        <div class="left-pane-hex-data" :style="{ width: `${24 * store.bytesInRow}px` }">
           <span v-for="(offset, index) in props.data.offsets" :key="index">
             <HexProp :data="offset" />
           </span>
@@ -53,8 +55,8 @@ store.indexBinaryData(props.data)
 
 .left-pane > .left-pane-hex-data {
   display: inline-block;
-  width: 200px;
   line-height: normal;
+  font-size: 15px;
 }
 
 .left-pane,
