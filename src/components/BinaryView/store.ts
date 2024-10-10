@@ -61,7 +61,7 @@ export const useBinaryViewStore = defineStore('binaryView', {
       let displayEnd: number | undefined = end;
       if (node.type !== 'pod') {
         if (node.value.length > 0)
-          displayEnd = node.value[0]?.offset;
+          displayEnd = node.value[0].offset * 2;
         else if (node.type === 'array')
           displayEnd = end;
         else

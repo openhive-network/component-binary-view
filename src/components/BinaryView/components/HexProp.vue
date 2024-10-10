@@ -8,6 +8,8 @@ const props = defineProps<{
 }>()
 
 const { index, colors, range } = store.nextData('HexProp')
+
+console.log(props.data.key, range.displayEnd, JSON.stringify(range.hex))
 </script>
 
 <template>
