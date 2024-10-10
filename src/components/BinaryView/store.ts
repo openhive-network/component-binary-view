@@ -22,8 +22,6 @@ export interface IIndexData {
   range: IBufferRangeData;
 }
 
-const hex2bin = (hex: string) => (parseInt(hex, 16).toString(2)).padStart(8, '0');
-
 export const useBinaryViewStore = defineStore('binaryView', {
   state: () => ({
     /* Private props: */
@@ -39,7 +37,8 @@ export const useBinaryViewStore = defineStore('binaryView', {
       end: -1
     },
     /* Public props: */
-    bytesInRow: -1
+    bytesInRow: -1,
+    uppercase: false
   }),
   getters: {
     /* Public getters: */
@@ -87,8 +86,16 @@ export const useBinaryViewStore = defineStore('binaryView', {
     indexBinaryData(data: IBinaryView) {
       this.data = data;
 
+      this.data.binary = this.setCase(this.data.binary);
+
       for (const index of data.offsets)
         this.indexNode(index);
+    },
+    setCase(value: string) {
+      if (this.uppercase)
+        return value.toUpperCase();
+
+      return value.toLowerCase();
     },
     nextData(indexingKey: string): IIndexData {
       const index = this.nextIndex(indexingKey);
@@ -101,6 +108,15 @@ export const useBinaryViewStore = defineStore('binaryView', {
         key: this.nodeKeys[index],
         displayValue: this.nodeValues[index]
       };
+    },
+    setBytesInRow(bytesInRow = 16) {
+      this.bytesInRow = bytesInRow;
+
+      if (this.bytesInRow < 1 || this.bytesInRow > 255)
+        throw new Error('Bytes in row must be between 1 and 255');
+    },
+    setUppercase(value = false) {
+      this.uppercase = value;
     },
     setHighligh(start: number, end: number) {
       this.highlightedRange.start = start;

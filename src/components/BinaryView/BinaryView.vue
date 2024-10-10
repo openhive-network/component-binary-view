@@ -9,19 +9,40 @@ const store = useBinaryViewStore()
 
 const props = defineProps<{
   data: IBinaryView
-  bytesInRow?: number
+  rowbytes?: number
+  uppercase?: boolean
 }>()
 
+store.setBytesInRow(props.rowbytes)
+store.setUppercase(props.uppercase)
 store.indexBinaryData(props.data)
-store.bytesInRow = props.bytesInRow || 16
 </script>
 
 <template>
   <div>
     <div class="binary-container">
       <div class="left-pane">
-        <ActionButtons class="mr-3 left-pane-actions-buttons" />
-        <div class="left-pane-hex-data" :style="{ width: `${24 * store.bytesInRow}px` }">
+        <ActionButtons class="left-pane-actions-buttons" />
+        <div class="left-pane-index">
+          <div class="left-pane-index-header">:</div>
+          <div
+            v-for="(offset, index) in Math.ceil(store.data.binary.length / 2 / store.bytesInRow)"
+            :key="offset"
+          >
+            {{ store.setCase((index * 16).toString(16).padStart(6, '0')) }}:
+          </div>
+        </div>
+        <div
+          class="left-pane-hex-data"
+          :style="{
+            width: `${24 * store.bytesInRow + 1}px` /* +1px due to some browsers font differences in .02px - switching lines */
+          }"
+        >
+          <div class="left-pane-binary-header">
+            <span v-for="(byte, index) in store.bytesInRow" :key="byte">
+              {{ store.setCase(index.toString(16).padStart(2, '0')) }}
+            </span>
+          </div>
           <span v-for="(offset, index) in props.data.offsets" :key="index">
             <HexProp :data="offset" />
           </span>
@@ -47,10 +68,32 @@ store.bytesInRow = props.bytesInRow || 16
 .left-pane {
   display: flex;
   justify-content: center;
+  margin-right: 20px;
+}
+
+.left-pane-binary-header,
+.left-pane-index-header {
+  margin-bottom: 8px;
+}
+
+.left-pane-binary-header > span {
+  padding: 0 3px;
+  color: white;
+}
+
+.left-pane-index > div {
+  margin-right: 4px;
+}
+
+.left-pane-index {
+  color: white;
+  text-align: right;
+  line-height: normal;
 }
 
 .left-pane-actions-buttons {
   flex-grow: 0;
+  margin-right: 20px;
 }
 
 .left-pane > .left-pane-hex-data {
