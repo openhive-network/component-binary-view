@@ -6,6 +6,6 @@ import BinaryView from '@/components/BinaryView'
 
 <template>
   <main style="max-width: 1000px">
-    <BinaryView :data="data" :uppercase="true" />
+    <BinaryView :data="data" />
   </main>
 </template>

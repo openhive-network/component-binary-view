@@ -3,6 +3,7 @@ import { generateRandomColorSpace, type TGenerateRandomColorSpaceOutput } from '
 import type { IBinaryView, TNode } from './types';
 
 export interface IBufferRangeData {
+  /** `start`, `end` and `displayEnd` values are not offsets in bytes, but in characters written in hexadecimal format representing binary view */
   start: number;
   end: number;
   /**
@@ -48,16 +49,24 @@ export const useBinaryViewStore = defineStore('binaryView', {
   },
   actions: {
     /* Private actions: */
-    indexNode(node: TNode, prev?: TNode) {
+    indexNode(node: TNode, nestedLevel: number, prev?: TNode) {
       const index = this.nextIndex('internal_store');
 
-      const nestedLevel = this.nestedLevels[index] = (this.nestedLevels[index - 1] ?? 0) + (prev ? (prev?.type === 'pod' ? 0 : 1) : 0);
+      this.nestedLevels[index] = nestedLevel;
       const previousBackgroundColor = nestedLevel === 0 ? { r: 0, g: 0, b: 0, a: 0 } : this.colors[index - 1]?.backgroundColor
       this.colors[index] = generateRandomColorSpace(node.key, node.type === 'pod' ? previousBackgroundColor : undefined);
 
-      const start = node.offset;
-      const end = start + node.size;
-      const displayEnd: number | undefined = node.type === 'pod' ? end : (node.value[0]?.offset ?? this.data.binary.length);
+      const start = node.offset * 2;
+      const end = start + (node.size * 2);
+      let displayEnd: number | undefined = end;
+      if (node.type !== 'pod') {
+        if (node.value.length > 0)
+          displayEnd = node.value[0]?.offset;
+        else if (node.type === 'array')
+          displayEnd = end;
+        else
+          displayEnd = this.data.binary.length;
+      }
       const fullHexString = this.data.binary.slice(start, end);
       const hex = start === displayEnd ? null : this.data.binary.slice(start, displayEnd).match(/.{1,2}/g);
 
@@ -72,7 +81,7 @@ export const useBinaryViewStore = defineStore('binaryView', {
       prev = node;
       if (node.type !== 'pod')
         for (const child of node.value) {
-          this.indexNode(child, prev);
+          this.indexNode(child, nestedLevel + 1, prev);
           prev = child;
         }
     },
@@ -89,7 +98,7 @@ export const useBinaryViewStore = defineStore('binaryView', {
       this.data.binary = this.setCase(this.data.binary);
 
       for (const index of data.offsets)
-        this.indexNode(index);
+        this.indexNode(index, 0);
     },
     setCase(value: string) {
       if (this.uppercase)

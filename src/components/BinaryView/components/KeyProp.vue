@@ -37,13 +37,13 @@ const normalizeHexValue = (data: number) => {
         </template>
         <div class="keyprop-details">
           <div>
-            <span class="mr-2">Size: </span><b>{{ range.end - range.start }}B</b>
+            <span class="mr-2">Size: </span><b>{{ (range.end - range.start) / 2 }}B</b>
           </div>
           <div>
-            <span class="mr-2">Start: </span><b>{{ normalizeHexValue(range.start) }}</b>
+            <span class="mr-2">Start: </span><b>{{ normalizeHexValue(range.start / 2) }}</b>
           </div>
           <div>
-            <span class="mr-2">End: </span><b>{{ normalizeHexValue(range.end) }}</b>
+            <span class="mr-2">End: </span><b>{{ normalizeHexValue(range.end / 2) }}</b>
           </div>
         </div>
       </v-tooltip>
