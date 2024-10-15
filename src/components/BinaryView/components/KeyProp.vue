@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { TNode } from '../types'
 import { useBinaryViewStore } from '../store'
+import { ref } from 'vue'
 const store = useBinaryViewStore()
 
 const props = defineProps<{
@@ -19,6 +20,8 @@ const normalizeHexValue = (data: number) => {
       .join('')
   )
 }
+
+const isUnfolded = ref(true)
 </script>
 
 <template>
@@ -29,6 +32,17 @@ const normalizeHexValue = (data: number) => {
       @mouseenter="store.setHighligh(range.start, range.end)"
       @mouseleave="store.leaveHighlight()"
     >
+      <span class="unfold-icon-container">
+        <v-icon
+          v-if="
+            (props.data.type === 'object' && props.data.children.length > 0) ||
+            (props.data.type === 'array' && props.data.length > 0)
+          "
+          size="16"
+          @click="isUnfolded = !isUnfolded"
+          >{{ isUnfolded ? 'mdi-minus' : 'mdi-plus' }}</v-icon
+        >
+      </span>
       <v-tooltip open-on-click open-on-hover location="top">
         <template v-slot:activator="{ props }">
           <v-icon class="mr-1" size="xs" v-bind="props">mdi-information-slab-circle-outline</v-icon>
@@ -80,6 +94,7 @@ const normalizeHexValue = (data: number) => {
     </div>
     <KeyProp
       v-if="props.data.type !== 'scalar' && props.data.children.length > 0"
+      :style="{ display: isUnfolded ? 'block' : 'none' }"
       v-for="(data, propsIndex) in props.data.children"
       :key="propsIndex"
       :data="data"
@@ -88,6 +103,11 @@ const normalizeHexValue = (data: number) => {
 </template>
 
 <style scoped>
+.unfold-icon-container {
+  width: 16px;
+  margin-right: 4px;
+  display: inline-block;
+}
 .props-key-data {
   cursor: pointer;
 }
