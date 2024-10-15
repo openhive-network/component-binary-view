@@ -5,6 +5,8 @@ import HexProp from './components/HexProp.vue'
 import KeyProp from './components/KeyProp.vue'
 import ActionButtons from './components/ActionButtons.vue'
 import { useBinaryViewStore } from './store'
+import { watch } from 'vue'
+
 const store = useBinaryViewStore()
 
 const props = defineProps<{
@@ -13,6 +15,13 @@ const props = defineProps<{
   uppercase?: boolean
 }>()
 
+watch(props, () => {
+  store.resetStore();
+  store.setBytesInRow(props.rowbytes)
+  store.setUppercase(props.uppercase)
+  store.indexBinaryData(props.data)
+})
+
 store.setBytesInRow(props.rowbytes)
 store.setUppercase(props.uppercase)
 store.indexBinaryData(props.data)
@@ -20,7 +29,7 @@ store.indexBinaryData(props.data)
 
 <template>
   <div>
-    <div class="binary-container">
+    <div class="binary-container" :key="props.data.binary">
       <div class="left-pane">
         <ActionButtons class="left-pane-actions-buttons" />
         <div class="left-pane-index">
@@ -35,7 +44,7 @@ store.indexBinaryData(props.data)
         <div
           class="left-pane-hex-data"
           :style="{
-            width: `${24 * store.bytesInRow + 1}px` /* +1px due to some browsers font differences in .02px - switching lines */
+            width: `${24 * store.bytesInRow + (0.2*store.bytesInRow)}px` /* +1px due to some browsers font differences in .02px - switching lines */
           }"
         >
           <div class="left-pane-binary-header">

@@ -54,14 +54,14 @@ export const useBinaryViewStore = defineStore('binaryView', {
 
       this.nestedLevels[index] = nestedLevel;
       const previousBackgroundColor = nestedLevel === 0 ? { r: 0, g: 0, b: 0, a: 0 } : this.colors[index - 1]?.backgroundColor
-      this.colors[index] = generateRandomColorSpace(node.key, node.type === 'pod' ? previousBackgroundColor : undefined);
+      this.colors[index] = generateRandomColorSpace(node.key, node.type === 'scalar' ? previousBackgroundColor : undefined);
 
       const start = node.offset * 2;
       const end = start + (node.size * 2);
       let displayEnd: number | undefined = end;
-      if (node.type !== 'pod') {
-        if (node.value.length > 0)
-          displayEnd = node.value[0].offset * 2;
+      if (node.type !== 'scalar') {
+        if (node.children.length > 0)
+          displayEnd = node.children[0].offset * 2;
         else if (node.type === 'array')
           displayEnd = end;
         else
@@ -73,14 +73,12 @@ export const useBinaryViewStore = defineStore('binaryView', {
       this.rangeData[index] = { start, end, displayEnd, hex, fullHexString };
 
       this.nodeKeys[index] = node.key;
-      if (node.type === 'pod')
+      if (node.value !== undefined)
         this.nodeValues[index] = node.value;
-      else if (node.type === 'array')
-        this.nodeValues[index] = `Length: ${node.length}`;
 
       prev = node;
-      if (node.type !== 'pod')
-        for (const child of node.value) {
+      if (node.type !== 'scalar')
+        for (const child of node.children) {
           this.indexNode(child, nestedLevel + 1, prev);
           prev = child;
         }
@@ -99,6 +97,19 @@ export const useBinaryViewStore = defineStore('binaryView', {
 
       for (const index of data.offsets)
         this.indexNode(index, 0);
+    },
+    resetStore() {
+      this.colors = {};
+      this.nestedLevels = {};
+      this.nodeKeys = {};
+      this.nodeValues = {};
+      this.currentIndex = {};
+      this.rangeData = {};
+      this.data = {};
+      this.highlightedRange = {
+        start: -1,
+        end: -1
+      };
     },
     setCase(value: string) {
       if (this.uppercase)

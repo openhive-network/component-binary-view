@@ -1,28 +1,8 @@
-interface INode {
-  key: string;
-  offset: number;
-  size: number;
-}
+import { IBinaryViewNode } from "@hiveio/wax";
 
-export interface IDataNode extends INode {
-  type: "pod";
-  value: string;
-}
-
-export interface IObjectNode extends INode {
-  type: "object";
-  value: Array<TNode>
-};
-
-export interface IArrayNode extends INode {
-  type: "array";
-  length: number;
-  value: Array<TNode>
-};
-
-export type TNode = IDataNode | IObjectNode | IArrayNode;
+export type TNode = IBinaryViewNode;
 
 export interface IBinaryView {
   binary: string;
-  offsets: Array<TNode>;
+  offsets: Array<IBinaryViewNode>;
 }

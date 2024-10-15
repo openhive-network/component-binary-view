@@ -24,14 +24,12 @@ const normalizeHexValue = (data: number) => {
 <template>
   <div :class="{ 'binary-view-force-bold': store.shouldHighlight(range.start, range.end) }">
     <div
-      @click="store.copyBinary(index)"
-      v-on:click.ctrl="store.copyHex(index)"
       :style="{ 'margin-left': `${nestedLevel * 16}px` }"
       class="props-key-data"
       @mouseenter="store.setHighligh(range.start, range.end)"
       @mouseleave="store.leaveHighlight()"
     >
-      <v-tooltip location="top">
+      <v-tooltip open-on-click open-on-hover location="top">
         <template v-slot:activator="{ props }">
           <v-icon class="mr-1" size="xs" v-bind="props">mdi-information-slab-circle-outline</v-icon>
         </template>
@@ -47,22 +45,28 @@ const normalizeHexValue = (data: number) => {
           </div>
         </div>
       </v-tooltip>
-      <span v-if="displayValue === undefined">
-        <span
-          :style="{ ...colors.css, color: 'white' }"
-          class="px-1 binary-view-force-bold-rarget"
-          >{{ key }}</span
-        >:
-      </span>
-      <span v-else class="pr-1">
-        <span :style="colors.css" class="px-1 binary-view-force-bold-rarget">{{ key }}</span>
-        <span v-if="props.data.type === 'pod'">: {{ JSON.stringify(displayValue) }}</span>
-        <span v-else>: {{ displayValue }}</span>
+      <span @click="store.copyBinary(index)" v-on:click.ctrl="store.copyHex(index)">
+        <span v-if="displayValue === undefined">
+          <span
+            :style="{ ...colors.css, color: 'white' }"
+            class="px-1 binary-view-force-bold-rarget"
+            >{{ key }}</span
+          >:
+        </span>
+        <span v-else class="pr-1">
+          <span :style="colors.css" class="px-1 binary-view-force-bold-rarget">{{ key }}</span>
+          <span v-if="props.data.type === 'scalar'"
+            >: <span class="display-value">{{ JSON.stringify(displayValue) }}</span></span
+          >
+          <span v-else
+            >: <span class="display-value">{{ displayValue }}</span></span
+          >
+        </span>
       </span>
     </div>
     <KeyProp
-      v-if="props.data.type !== 'pod' && props.data.value.length > 0"
-      v-for="(data, propsIndex) in props.data.value"
+      v-if="props.data.type !== 'scalar' && props.data.children.length > 0"
+      v-for="(data, propsIndex) in props.data.children"
       :key="propsIndex"
       :data="data"
     />
@@ -72,6 +76,9 @@ const normalizeHexValue = (data: number) => {
 <style scoped>
 .props-key-data {
   cursor: pointer;
+}
+.display-value {
+  word-break: break-all;
 }
 .keyprop-details > div {
   display: flex;

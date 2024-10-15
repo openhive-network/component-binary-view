@@ -4,7 +4,6 @@ Binary view representation of the hexadecimal values
 
 ## Important files
 
-- [`src/assets/data.ts`](src/assets/data.ts) - JSON representation of the Transaction "retrieved" from the Wax backend
 - [`src/components/BinaryView`](src/components/BinaryView) - directory containing main component files
 
 ## Usage
