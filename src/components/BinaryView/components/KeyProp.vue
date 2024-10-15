@@ -11,14 +11,11 @@ const props = defineProps<{
 const { index, nestedLevel, colors, key, displayValue, range } = store.nextData('KeyProp')
 
 const normalizeHexValue = (data: number) => {
-  return (
-    '0x' +
-    data
-      .toString(16)
-      .match(/.{1,2}/g)!
-      .map((node) => node.padStart(2, '0'))
-      .join('')
-  )
+  let hexData = data.toString(16)
+
+  if (hexData.length % 2 === 1) hexData = `0${hexData}`
+
+  return `0x${hexData}`
 }
 
 const isUnfolded = ref(true)
