@@ -105,7 +105,7 @@ export const useBinaryViewStore = defineStore('binaryView', {
       this.nodeValues = {};
       this.currentIndex = {};
       this.rangeData = {};
-      this.data = {};
+      this.data = {} as IBinaryView;
       this.highlightedRange = {
         start: -1,
         end: -1

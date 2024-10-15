@@ -10,7 +10,7 @@ const applyTransaction = () => {
   createWaxFoundation().then(wax => {
     const tx = wax.createTransactionFromJson(transaction.value);
 
-    data.value = tx.binaryViewMetadata;
+    data.value = tx.binaryViewMetadata as any;
   });
 };
 </script>
