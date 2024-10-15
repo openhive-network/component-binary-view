@@ -45,7 +45,7 @@ const normalizeHexValue = (data: number) => {
           </div>
         </div>
       </v-tooltip>
-      <span @click="store.copyBinary(index)" v-on:click.ctrl="store.copyHex(index)">
+      <span @click="store.copyBinary(index)" v-on:click.alt="store.copyHex(index)">
         <span v-if="displayValue === undefined">
           <span
             :style="{

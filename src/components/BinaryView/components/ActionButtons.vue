@@ -27,7 +27,7 @@ const store = useBinaryViewStore()
       rounded="lg"
     >
       <v-icon>mdi-content-copy</v-icon>
-      <v-tooltip activator="parent" location="end">Copy hex (CTRL + click)</v-tooltip>
+      <v-tooltip activator="parent" location="end">Copy hex (ALT + click)</v-tooltip>
     </v-btn>
   </div>
 </template>

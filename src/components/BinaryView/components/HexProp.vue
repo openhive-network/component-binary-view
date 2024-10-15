@@ -14,7 +14,7 @@ const { index, colors, range } = store.nextData('HexProp')
   <span :class="{ 'binary-view-force-bold': store.shouldHighlight(range.start, range.end) }">
     <span
       @click="store.copyBinary(index)"
-      v-on:click.ctrl="store.copyHex(index)"
+      v-on:click.alt="store.copyHex(index)"
       :style="{
         color: colors.css.color,
         'background-color': store.shouldHighlight(range.start, range.end)
