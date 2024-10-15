@@ -20,7 +20,7 @@ const generateRandomBackgroundColor = (seed: Color): Color => {
   const r = rComponent + (MAX_RGB_VALUE - bgColorAllowedRange);
   const g = gComponent + (MAX_RGB_VALUE - bgColorAllowedRange);
   const b = bComponent + (MAX_RGB_VALUE - bgColorAllowedRange);
-  const a = 0.05; // Ensuring semi-transparency
+  const a = 0.15; // Ensuring semi-transparency
 
   return { r, g, b, a };
 };

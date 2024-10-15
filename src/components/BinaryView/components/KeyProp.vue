@@ -48,13 +48,27 @@ const normalizeHexValue = (data: number) => {
       <span @click="store.copyBinary(index)" v-on:click.ctrl="store.copyHex(index)">
         <span v-if="displayValue === undefined">
           <span
-            :style="{ ...colors.css, color: 'white' }"
+            :style="{
+              'background-color': store.shouldHighlight(range.start, range.end)
+                ? colors.css['background-color']
+                : 'transparent',
+              color: 'white'
+            }"
             class="px-1 binary-view-force-bold-rarget"
             >{{ key }}</span
           >:
         </span>
         <span v-else class="pr-1">
-          <span :style="colors.css" class="px-1 binary-view-force-bold-rarget">{{ key }}</span>
+          <span
+            :style="{
+              color: colors.css.color,
+              'background-color': store.shouldHighlight(range.start, range.end)
+                ? colors.css['background-color']
+                : 'transparent'
+            }"
+            class="px-1 binary-view-force-bold-rarget"
+            >{{ key }}</span
+          >
           <span v-if="props.data.type === 'scalar'"
             >: <span class="display-value">{{ JSON.stringify(displayValue) }}</span></span
           >

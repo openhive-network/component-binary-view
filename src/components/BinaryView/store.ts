@@ -53,7 +53,7 @@ export const useBinaryViewStore = defineStore('binaryView', {
       const index = this.nextIndex('internal_store');
 
       this.nestedLevels[index] = nestedLevel;
-      const previousBackgroundColor = nestedLevel === 0 ? { r: 0, g: 0, b: 0, a: 0 } : this.colors[index - 1]?.backgroundColor
+      const previousBackgroundColor = this.colors[index - 1]?.backgroundColor
       this.colors[index] = generateRandomColorSpace(node.key, node.type === 'scalar' ? previousBackgroundColor : undefined);
 
       const start = node.offset * 2;
