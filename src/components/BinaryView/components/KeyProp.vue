@@ -18,7 +18,21 @@ const normalizeHexValue = (data: number) => {
   return `0x${hexData}`
 }
 
-const isUnfolded = ref(true)
+let isFocued = false
+
+const leaveFocusHighlight = () => {
+  store.leaveFocusHighlight()
+  isFocused = false
+}
+
+const setFocusHighligh = () => {
+  setTimeout(() => {
+    if (isFocued) store.leaveFocusHighlight()
+    else store.setFocusHighlight(range.start, range.end)
+
+    isFocued = !isFocued
+  }, 0)
+}
 </script>
 
 <template>
@@ -36,8 +50,8 @@ const isUnfolded = ref(true)
             (props.data.type === 'array' && props.data.length > 0)
           "
           size="16"
-          @click="isUnfolded = !isUnfolded"
-          >{{ isUnfolded ? 'mdi-minus' : 'mdi-plus' }}</v-icon
+          @click="store.unfolded[index] = !store.unfolded[index]"
+          >{{ !!store.unfolded[index] ? 'mdi-plus' : 'mdi-minus' }}</v-icon
         >
       </span>
       <v-tooltip open-on-click open-on-hover location="top">
@@ -56,14 +70,18 @@ const isUnfolded = ref(true)
           </div>
         </div>
       </v-tooltip>
-      <span @click="store.copyBinary(index)" v-on:click.alt="store.copyHex(index)">
+      <span
+        @click="store.copyBinary(index), setFocusHighligh()"
+        v-on:click.alt="store.copyHex(index), setFocusHighligh()"
+        v-click-outside="leaveFocusHighlight"
+      >
         <span v-if="displayValue === undefined">
           <span
             :style="{
+              ...colors.css,
               'background-color': store.shouldHighlight(range.start, range.end)
                 ? colors.css['background-color']
-                : 'transparent',
-              color: 'white'
+                : 'transparent'
             }"
             class="px-1 binary-view-force-bold-rarget"
             >{{ key }}</span
@@ -72,7 +90,7 @@ const isUnfolded = ref(true)
         <span v-else class="pr-1">
           <span
             :style="{
-              color: colors.css.color,
+              ...colors.css,
               'background-color': store.shouldHighlight(range.start, range.end)
                 ? colors.css['background-color']
                 : 'transparent'
@@ -91,7 +109,7 @@ const isUnfolded = ref(true)
     </div>
     <KeyProp
       v-if="props.data.type !== 'scalar' && props.data.children.length > 0"
-      :style="{ display: isUnfolded ? 'block' : 'none' }"
+      :style="{ display: !!store.unfolded[index] ? 'none' : 'block' }"
       v-for="(data, propsIndex) in props.data.children"
       :key="propsIndex"
       :data="data"

@@ -37,14 +37,20 @@ export const useBinaryViewStore = defineStore('binaryView', {
       start: -1,
       end: -1
     },
+    focusHighlightRange: {
+      start: -1,
+      end: -1
+    },
     /* Public props: */
     bytesInRow: -1,
-    uppercase: false
+    uppercase: false,
+    unfolded: {} as Record<number, boolean>
   }),
   getters: {
     /* Public getters: */
     shouldHighlight: (state) => (start: number, end: number) => {
-      return start >= state.highlightedRange.start && end <= state.highlightedRange.end;
+      return start >= state.highlightedRange.start && end <= state.highlightedRange.end
+        || start >= state.focusHighlightRange.start && end <= state.focusHighlightRange.end;
     }
   },
   actions: {
@@ -58,15 +64,7 @@ export const useBinaryViewStore = defineStore('binaryView', {
 
       const start = node.offset * 2;
       const end = start + (node.size * 2);
-      let displayEnd: number | undefined = end;
-      if (node.type !== 'scalar') {
-        if (node.children.length > 0)
-          displayEnd = node.children[0].offset * 2;
-        else if (node.type === 'array')
-          displayEnd = end;
-        else
-          displayEnd = this.data.binary.length;
-      }
+      const displayEnd = (node.type !== 'scalar' && node.children.length > 0) ? node.children[0].offset * 2 : end;
       const fullHexString = this.data.binary.slice(start, end);
       const hex = start === displayEnd ? null : this.data.binary.slice(start, displayEnd).match(/.{1,2}/g);
 
@@ -105,8 +103,13 @@ export const useBinaryViewStore = defineStore('binaryView', {
       this.nodeValues = {};
       this.currentIndex = {};
       this.rangeData = {};
+      this.unfolded = {};
       this.data = {} as IBinaryView;
       this.highlightedRange = {
+        start: -1,
+        end: -1
+      };
+      this.focusHighlightRange = {
         start: -1,
         end: -1
       };
@@ -145,6 +148,14 @@ export const useBinaryViewStore = defineStore('binaryView', {
     leaveHighlight() {
       this.highlightedRange.start = -1;
       this.highlightedRange.end = -1;
+    },
+    setFocusHighlight(start: number, end: number) {
+      this.focusHighlightRange.start = start;
+      this.focusHighlightRange.end = end;
+    },
+    leaveFocusHighlight() {
+      this.focusHighlightRange.start = -1;
+      this.focusHighlightRange.end = -1;
     },
     copyHex(index?: number) { // When no index provided - copy entire buffer
       const hex = index === undefined ? this.data.binary : this.rangeData[index].fullHexString;

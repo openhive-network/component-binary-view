@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@hiveio/wax':
-        specifier: 1.27.6-rc5-241015083714
-        version: 1.27.6-rc5-241015083714
+        specifier: 1.27.6-rc5-241016111634
+        version: 1.27.6-rc5-241016111634
       '@mdi/font':
         specifier: 7.4.47
         version: 7.4.47
@@ -249,8 +249,8 @@ packages:
     resolution: {integrity: sha1-+tV/0zANMNTgBA7WJAT5DKO9Bk0=, tarball: https://gitlab.syncad.com/api/v4/projects/198/packages/npm/@hiveio/beekeeper/-/@hiveio/beekeeper-1.27.6-rc3.tgz}
     engines: {node: '>= 18'}
 
-  '@hiveio/wax@1.27.6-rc5-241015083714':
-    resolution: {integrity: sha1-uKdhzimo3po7FI84FuMgz3/Kd5E=, tarball: https://gitlab.syncad.com/api/v4/projects/419/packages/npm/@hiveio/wax/-/@hiveio/wax-1.27.6-rc5-241015083714.tgz}
+  '@hiveio/wax@1.27.6-rc5-241016111634':
+    resolution: {integrity: sha1-TcaftrBDtMpiaSRD4Bnpbc0uCX4=, tarball: https://gitlab.syncad.com/api/v4/projects/419/packages/npm/@hiveio/wax/-/@hiveio/wax-1.27.6-rc5-241016111634.tgz}
     engines: {node: '>= 18'}
 
   '@humanwhocodes/config-array@0.13.0':
@@ -1349,7 +1349,7 @@ snapshots:
 
   '@hiveio/beekeeper@1.27.6-rc3': {}
 
-  '@hiveio/wax@1.27.6-rc5-241015083714':
+  '@hiveio/wax@1.27.6-rc5-241016111634':
     dependencies:
       '@hiveio/beekeeper': 1.27.6-rc3
       class-transformer: 0.5.1
