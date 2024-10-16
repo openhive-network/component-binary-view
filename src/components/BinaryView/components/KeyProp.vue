@@ -18,7 +18,7 @@ const normalizeHexValue = (data: number) => {
   return `0x${hexData}`
 }
 
-let isFocued = false
+let isFocused = false
 
 const leaveFocusHighlight = () => {
   store.leaveFocusHighlight()
@@ -27,12 +27,18 @@ const leaveFocusHighlight = () => {
 
 const setFocusHighligh = () => {
   setTimeout(() => {
-    if (isFocued) store.leaveFocusHighlight()
+    if (isFocused) store.leaveFocusHighlight()
     else store.setFocusHighlight(range.start, range.end)
 
-    isFocued = !isFocued
+    isFocused = !isFocused
   }, 0)
 }
+
+const canFold =
+  (props.data.type === 'object' && props.data.children.length > 0) ||
+  (props.data.type === 'array' && props.data.length > 0)
+
+if (canFold) store.unfolded[index] = true
 </script>
 
 <template>
@@ -44,15 +50,9 @@ const setFocusHighligh = () => {
       @mouseleave="store.leaveHighlight()"
     >
       <span class="unfold-icon-container">
-        <v-icon
-          v-if="
-            (props.data.type === 'object' && props.data.children.length > 0) ||
-            (props.data.type === 'array' && props.data.length > 0)
-          "
-          size="16"
-          @click="store.unfolded[index] = !store.unfolded[index]"
-          >{{ !!store.unfolded[index] ? 'mdi-plus' : 'mdi-minus' }}</v-icon
-        >
+        <v-icon v-if="canFold" size="16" @click="store.unfolded[index] = !store.unfolded[index]">{{
+          !!store.unfolded[index] ? 'mdi-minus' : 'mdi-plus'
+        }}</v-icon>
       </span>
       <v-tooltip open-on-click open-on-hover location="top">
         <template v-slot:activator="{ props }">
@@ -109,7 +109,7 @@ const setFocusHighligh = () => {
     </div>
     <KeyProp
       v-if="props.data.type !== 'scalar' && props.data.children.length > 0"
-      :style="{ display: !!store.unfolded[index] ? 'none' : 'block' }"
+      :style="{ display: !!store.unfolded[index] ? 'block' : 'none' }"
       v-for="(data, propsIndex) in props.data.children"
       :key="propsIndex"
       :data="data"

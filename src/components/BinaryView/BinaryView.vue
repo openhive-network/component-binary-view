@@ -16,7 +16,7 @@ const props = defineProps<{
 }>()
 
 watch(props, () => {
-  store.resetStore();
+  store.resetStore()
   store.setBytesInRow(props.rowbytes)
   store.setUppercase(props.uppercase)
   store.indexBinaryData(props.data)
@@ -44,7 +44,7 @@ store.indexBinaryData(props.data)
         <div
           class="left-pane-hex-data"
           :style="{
-            width: `${24 * store.bytesInRow + (0.2*store.bytesInRow)}px` /* +1px due to some browsers font differences in .02px - switching lines */
+            width: `${24 * store.bytesInRow + 0.2 * store.bytesInRow}px` /* +1px due to some browsers font differences in .02px - switching lines */
           }"
         >
           <div class="left-pane-binary-header">
@@ -109,6 +109,10 @@ store.indexBinaryData(props.data)
   display: inline-block;
   line-height: normal;
   font-size: 15px;
+}
+
+.right-pane {
+  width: 100%;
 }
 
 .left-pane,

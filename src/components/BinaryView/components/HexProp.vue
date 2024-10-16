@@ -10,18 +10,19 @@ const props = defineProps<{
 
 const { index, colors, range } = store.nextData('HexProp')
 
+let isFocused = false
+
 const leaveFocusHighlight = () => {
   store.leaveFocusHighlight()
   isFocused = false
 }
 
-let isFocued = false
 const setFocusHighligh = () => {
   setTimeout(() => {
-    if (isFocued) store.leaveFocusHighlight()
+    if (isFocused) store.leaveFocusHighlight()
     else store.setFocusHighlight(range.start, range.end)
 
-    isFocued = !isFocued
+    isFocused = !isFocused
   }, 0)
 }
 </script>

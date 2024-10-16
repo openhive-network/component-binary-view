@@ -162,6 +162,14 @@ export const useBinaryViewStore = defineStore('binaryView', {
 
       navigator.clipboard.writeText(hex);
     },
+    foldAll() {
+      for (const index in this.unfolded)
+        this.unfolded[index] = false;
+    },
+    unfoldAll() {
+      for (const index in this.unfolded)
+        this.unfolded[index] = true;
+    },
     copyBinary(index?: number) { // When no index provided - copy entire buffer
       const hex = (index === undefined ? this.data.binary : this.rangeData[index].fullHexString).match(/.{1,2}/g) as RegExpMatchArray;
 
