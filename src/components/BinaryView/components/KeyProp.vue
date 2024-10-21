@@ -41,14 +41,14 @@ if (canFold) store.unfolded[index] = true
       @mouseenter="store.setHighligh(range.start, range.end)"
       @mouseleave="store.leaveHighlight()"
     >
-      <span class="unfold-icon-container">
+      <span class="binary-view-keyprop-unfold-icon-container">
         <v-icon v-if="canFold" size="16" @click="store.unfolded[index] = !store.unfolded[index]" :icon="!!store.unfolded[index] ? mdiMinus : mdiPlus" />
       </span>
       <v-tooltip open-on-click open-on-hover location="top">
         <template v-slot:activator="{ props }">
           <v-icon class="mr-1" size="xs" v-bind="props" :icon="mdiInformationSlabCircleOutline" />
         </template>
-        <div class="keyprop-details">
+        <div class="binary-view-keyprop-keyprop-details">
           <div>
             <span class="mr-2">Size: </span><b>{{ (range.end - range.start) / 2 }}B</b>
           </div>
@@ -61,7 +61,7 @@ if (canFold) store.unfolded[index] = true
         </div>
       </v-tooltip>
       <span
-        class="props-key-data"
+        class="binary-view-keyprop-props-key-data"
         @click="setFocusHighligh()"
         v-click-outside="leaveFocusHighlight"
       >
@@ -89,10 +89,10 @@ if (canFold) store.unfolded[index] = true
             >{{ key }}</span
           >
           <span v-if="props.data.type === 'scalar'"
-            >: <span class="display-value">{{ JSON.stringify(displayValue) }}</span></span
+            >: <span class="binary-view-keyprop-display-value">{{ JSON.stringify(displayValue) }}</span></span
           >
           <span v-else
-            >: <span class="display-value">{{ displayValue }}</span></span
+            >: <span class="binary-view-keyprop-display-value">{{ displayValue }}</span></span
           >
         </span>
       </span>
@@ -107,24 +107,3 @@ if (canFold) store.unfolded[index] = true
     </div>
   </div>
 </template>
-
-<style scoped>
-.unfold-icon-container {
-  width: 16px;
-  margin-right: 4px;
-  display: inline-block;
-}
-.props-key-data {
-  cursor: pointer;
-}
-.display-value {
-  word-break: break-all;
-}
-.keyprop-details > div {
-  display: flex;
-  justify-content: space-between;
-}
-.keyprop-details > div > b {
-  font-family: 'Courier New', Courier, monospace;
-}
-</style>

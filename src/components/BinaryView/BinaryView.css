@@ -1,3 +1,8 @@
+/* We had to move all scoped styles to global css file due to Vite bundling it
+  into a separate css file which could not be loaded properly using shadow DOM */
+
+/* Common styles */
+
 .binary-view-force-bold .binary-view-force-bold-rarget {
   font-weight: 900 !important;
   text-shadow:
@@ -5,4 +10,93 @@
     0 1px rgba(255, 255, 255, 0.1),
     1px 0 rgba(255, 255, 255, 0.1),
     0 -1px rgba(255, 255, 255, 0.1);
+}
+
+/* BinaryView.css */
+
+.binary-view-container {
+  font-family: 'Courier New', Courier, monospace;
+  display: flex;
+  flex-direction: row;
+  user-select: none;
+}
+
+.binary-view-left-pane {
+  display: flex;
+  justify-content: center;
+  margin-right: 20px;
+}
+
+.binary-view-left-pane-binary-header,
+.binary-view-left-pane-index-header {
+  margin-bottom: 8px;
+}
+
+.binary-view-left-pane-binary-header > span {
+  padding: 0 3px;
+  color: white;
+}
+
+.binary-view-left-pane-index > div {
+  margin-right: 4px;
+}
+
+.binary-view-left-pane-index {
+  color: white;
+  text-align: right;
+  line-height: normal;
+}
+
+.binary-view-left-pane-actions-buttons {
+  flex-grow: 0;
+  margin-right: 20px;
+}
+
+.binary-view-left-pane > .binary-view-left-pane-hex-data {
+  display: inline-block;
+  line-height: normal;
+  font-size: 15px;
+}
+
+.binary-view-right-pane {
+  width: 100%;
+}
+
+.binary-view-left-pane,
+.binary-view-right-pane {
+  flex-grow: 1;
+  height: 100%;
+}
+
+/* KeyProp.vue */
+
+
+.binary-view-keyprop-unfold-icon-container {
+  width: 16px;
+  margin-right: 4px;
+  display: inline-block;
+}
+.binary-view-keyprop-props-key-data {
+  cursor: pointer;
+}
+.binary-view-keyprop-display-value {
+  word-break: break-all;
+}
+.binary-view-keyprop-keyprop-details > div {
+  display: flex;
+  justify-content: space-between;
+}
+.binary-view-keyprop-keyprop-details > div > b {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* HexProp.vue */
+
+
+.binary-view-hexprop-bytes-group {
+  cursor: pointer;
+  word-break: break-word;
+}
+.binary-view-hexprop-single-byte {
+  padding: 0 3px;
 }

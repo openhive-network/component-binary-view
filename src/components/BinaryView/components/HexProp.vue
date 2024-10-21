@@ -40,9 +40,9 @@ const setFocusHighligh = () => {
       }"
       @mouseenter="store.setHighligh(range.start, range.end)"
       @mouseleave="store.leaveHighlight()"
-      class="bytes-group binary-view-force-bold-rarget"
+      class="binary-view-hexprop-bytes-group binary-view-force-bold-rarget"
     >
-      <span class="single-byte" v-for="(hexByte, index) in range.hex" :key="index">
+      <span class="binary-view-hexprop-single-byte" v-for="(hexByte, index) in range.hex" :key="index">
         {{ hexByte }}
       </span>
     </span>
@@ -55,13 +55,3 @@ const setFocusHighligh = () => {
     </span>
   </span>
 </template>
-
-<style scoped>
-.bytes-group {
-  cursor: pointer;
-  word-break: break-word;
-}
-.single-byte {
-  padding: 0 3px;
-}
-</style>

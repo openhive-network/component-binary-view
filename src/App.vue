@@ -4,13 +4,13 @@ import { ref } from 'vue'
 import { createWaxFoundation } from '@hiveio/wax'
 
 const transaction = ref('')
-const data: any = ref(undefined)
+const data = ref('')
 
 const applyTransaction = () => {
   createWaxFoundation().then((wax) => {
     const tx = wax.createTransactionFromJson(transaction.value)
 
-    data.value = tx.binaryViewMetadata as any
+    data.value = JSON.stringify(tx.binaryViewMetadata)
 
     qs.set('transaction', btoa(tx.toApi()))
 
@@ -57,6 +57,6 @@ if (savedTx) {
         </v-card>
       </template>
     </v-dialog>
-    <BinaryView @copy="console.log('copied')" class="mt-4" v-if="data" :data="data" />
+    <BinaryView @copy="console.log('copied')" class="mt-4" v-if="data.length > 0" :data="data" />
   </main>
 </template>

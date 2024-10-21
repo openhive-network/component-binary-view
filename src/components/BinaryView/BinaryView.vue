@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import './BinaryView.css' // Global styles shared between all components
 import BinaryDataHeader from './components/BinaryDataHeader.vue';
 import { type IBinaryView } from './types'
 import HexProp from './components/HexProp.vue'
@@ -13,7 +12,7 @@ const emit = defineEmits(['copy'])
 const store = useBinaryViewStore()
 
 const props = defineProps<{
-  data: IBinaryView
+  data: string // We use string due to DOM limitations in propagating data to Web Components
   rowbytes?: number
   uppercase?: boolean
 }>()
@@ -22,22 +21,22 @@ watch(props, () => {
   store.resetStore()
   store.setBytesInRow(props.rowbytes)
   store.setUppercase(props.uppercase)
-  store.indexBinaryData(props.data)
+  store.indexBinaryData(JSON.parse(props.data) as IBinaryView)
 })
 
 store.setBytesInRow(props.rowbytes)
 store.setUppercase(props.uppercase)
-store.indexBinaryData(props.data)
+store.indexBinaryData(JSON.parse(props.data) as IBinaryView)
 </script>
 
 <template>
   <div>
     <BinaryDataHeader />
-    <div class="binary-container" :key="props.data.binary">
-      <div class="left-pane">
-        <ActionButtons @copy="emit('copy')" class="left-pane-actions-buttons" />
-        <div class="left-pane-index">
-          <div class="left-pane-index-header">:</div>
+    <div class="binary-view-container" :key="store.data.binary">
+      <div class="binary-view-left-pane">
+        <ActionButtons @copy="emit('copy')" class="binary-view-left-pane-actions-buttons" />
+        <div class="binary-view-left-pane-index">
+          <div class="binary-view-left-pane-index-header">:</div>
           <div
             v-for="(offset, index) in Math.ceil(store.data.binary.length / 2 / store.bytesInRow)"
             :key="offset"
@@ -46,82 +45,26 @@ store.indexBinaryData(props.data)
           </div>
         </div>
         <div
-          class="left-pane-hex-data"
+          class="binary-view-left-pane-hex-data"
           :style="{
             width: `${24 * store.bytesInRow + 0.2 * store.bytesInRow}px` /* +1px due to some browsers font differences in .02px - switching lines */
           }"
         >
-          <div class="left-pane-binary-header">
+          <div class="binary-view-left-pane-binary-header">
             <span v-for="(byte, index) in store.bytesInRow" :key="byte">
               {{ store.setCase(index.toString(16).padStart(2, '0')) }}
             </span>
           </div>
-          <span v-for="(offset, index) in props.data.offsets" :key="index">
+          <span v-for="(offset, index) in store.data.offsets" :key="index">
             <HexProp :data="offset" />
           </span>
         </div>
       </div>
-      <div class="right-pane">
-        <div v-for="(offset, index) in props.data.offsets" :key="index">
+      <div class="binary-view-right-pane">
+        <div v-for="(offset, index) in store.data.offsets" :key="index">
           <KeyProp :data="offset" />
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-.binary-container {
-  font-family: 'Courier New', Courier, monospace;
-  display: flex;
-  flex-direction: row;
-  user-select: none;
-}
-
-.left-pane {
-  display: flex;
-  justify-content: center;
-  margin-right: 20px;
-}
-
-.left-pane-binary-header,
-.left-pane-index-header {
-  margin-bottom: 8px;
-}
-
-.left-pane-binary-header > span {
-  padding: 0 3px;
-  color: white;
-}
-
-.left-pane-index > div {
-  margin-right: 4px;
-}
-
-.left-pane-index {
-  color: white;
-  text-align: right;
-  line-height: normal;
-}
-
-.left-pane-actions-buttons {
-  flex-grow: 0;
-  margin-right: 20px;
-}
-
-.left-pane > .left-pane-hex-data {
-  display: inline-block;
-  line-height: normal;
-  font-size: 15px;
-}
-
-.right-pane {
-  width: 100%;
-}
-
-.left-pane,
-.right-pane {
-  flex-grow: 1;
-  height: 100%;
-}
-</style>

@@ -2,10 +2,11 @@
   "name": "binary-view-presentation",
   "description": "Binary view representation of the transaction",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "type": "module",
   "files": [
-    "dist-wc"
+    "dist-wc/binary-view.js",
+    "dist-wc/binary-view.umd.cjs"
   ],
   "main": "./dist-wc/binary-view.umd.cjs",
   "module": "./dist-wc/binary-view.js",
@@ -13,7 +14,8 @@
     ".": {
       "import": "./dist-wc/binary-view.js",
       "require": "./dist-wc/binary-view.umd.cjs"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
     "dev": "vite",
@@ -45,6 +47,7 @@
     "vite-plugin-vuetify": "^2.0.4",
     "vue": "^3.4.29",
     "vue-tsc": "^2.0.21",
+    "vue-web-component-wrapper": "^1.6.7",
     "vuetify": "^3.7.2"
   }
 }
