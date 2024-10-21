@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useBinaryViewStore } from '../store'
 
+import { mdiMinus } from '@mdi/js'
+
 const store = useBinaryViewStore()
 </script>
 
@@ -16,7 +18,7 @@ const store = useBinaryViewStore()
         {{ store.normalizeHexValue(store.focusHighlightRange.start / 2, store.focusHighlightRange.end / 2) }} - {{ store.normalizeHexValue(store.focusHighlightRange.end / 2) }}
       </b>
       <span v-else>
-        <v-icon size="xs">mdi-minus</v-icon>
+        <v-icon size="xs" :icon="mdiMinus" />
       </span>
     </span>
     <v-divider inset vertical class="mx-2"/>
@@ -26,7 +28,7 @@ const store = useBinaryViewStore()
         {{ store.normalizeHexValue(store.highlightedRange.start / 2, store.highlightedRange.end / 2) }} - {{ store.normalizeHexValue(store.highlightedRange.end / 2) }}
       </b>
       <span v-else>
-        <v-icon size="xs">mdi-minus</v-icon>
+        <v-icon size="xs" :icon="mdiMinus" />
       </span>
     </span>
   </div>

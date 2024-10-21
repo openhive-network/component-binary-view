@@ -2,6 +2,8 @@
 import { useBinaryViewStore } from '../store'
 import { defineEmits } from 'vue';
 
+import { mdiHexadecimal, mdiContentCopy, mdiUnfoldLessVertical, mdiUnfoldMoreVertical } from '@mdi/js';
+
 const store = useBinaryViewStore()
 
 const emit = defineEmits(['copy'])
@@ -22,7 +24,7 @@ const emit = defineEmits(['copy'])
             border="sm"
             rounded="lg"
           >
-            <v-icon>mdi-hexadecimal</v-icon>
+            <v-icon :icon="mdiHexadecimal"/>
           </v-btn>
         </div>
       </template>
@@ -41,7 +43,7 @@ const emit = defineEmits(['copy'])
             border="sm"
             rounded="lg"
           >
-            <v-icon>mdi-content-copy</v-icon>
+            <v-icon :icon="mdiContentCopy" />
           </v-btn>
         </div>
       </template>
@@ -57,7 +59,7 @@ const emit = defineEmits(['copy'])
       border="sm"
       rounded="lg"
     >
-      <v-icon>mdi-unfold-less-vertical</v-icon>
+      <v-icon :icon=mdiUnfoldLessVertical />
       <v-tooltip activator="parent" location="end">Fold all</v-tooltip>
     </v-btn>
     <v-btn
@@ -69,7 +71,7 @@ const emit = defineEmits(['copy'])
       border="sm"
       rounded="lg"
     >
-      <v-icon>mdi-unfold-more-vertical</v-icon>
+      <v-icon :icon="mdiUnfoldMoreVertical" />
       <v-tooltip activator="parent" location="end">Unfold all</v-tooltip>
     </v-btn>
   </div>

@@ -1,22 +1,4 @@
-import { fileURLToPath, URL } from 'node:url'
-
-import Vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 import { defineConfig } from 'vite'
-import Vue from '@vitejs/plugin-vue'
+import userConfig from './vite.config.base'
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    Vue({
-      template: { transformAssetUrls },
-    }),
-    // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
-    Vuetify(),
-  ],
-  base: './',
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  }
-})
+export default defineConfig(userConfig)

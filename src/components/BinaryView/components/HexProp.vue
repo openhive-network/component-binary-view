@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import type { TNode } from '../types'
 import { useBinaryViewStore } from '../store'
-import { nextTick } from 'vue'
 const store = useBinaryViewStore()
 
 const props = defineProps<{
   data: TNode
 }>()
 
-const { index, colors, range } = store.nextData('HexProp')
+const { colors, range } = store.nextData('HexProp')
 
 let isFocused = false
 
@@ -30,6 +29,7 @@ const setFocusHighligh = () => {
 <template>
   <span :class="{ 'binary-view-force-bold': store.shouldHighlight(range.start, range.end) }">
     <span
+      v-if="range.hex !== null"
       @click="setFocusHighligh()"
       v-click-outside="leaveFocusHighlight"
       :style="{
@@ -41,7 +41,6 @@ const setFocusHighligh = () => {
       @mouseenter="store.setHighligh(range.start, range.end)"
       @mouseleave="store.leaveHighlight()"
       class="bytes-group binary-view-force-bold-rarget"
-      v-if="range.hex !== null"
     >
       <span class="single-byte" v-for="(hexByte, index) in range.hex" :key="index">
         {{ hexByte }}

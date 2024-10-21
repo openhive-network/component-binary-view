@@ -1,6 +1,6 @@
 # binary-view-presentation
 
-Binary view representation of the hexadecimal values
+Binary view representation of the transaction
 
 ## Important files
 
@@ -23,6 +23,10 @@ import BinaryView from '@/components/BinaryView'
 </template>
 ```
 
+## Web component
+
+Upon [building](#build-for-production) there will be created a directory named `dist-wc`, where [Web Component]() files will be located
+
 ## Development
 
 ### Project Setup
@@ -31,13 +35,13 @@ import BinaryView from '@/components/BinaryView'
 pnpm install
 ```
 
-### Compile and Hot-Reload for Development
+### Run development server
 
 ```sh
 pnpm dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### Build for production
 
 ```sh
 pnpm build

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { TNode } from '../types'
 import { useBinaryViewStore } from '../store'
-import { ref } from 'vue'
 const store = useBinaryViewStore()
+
+import { mdiMinus, mdiPlus, mdiInformationSlabCircleOutline } from '@mdi/js'
 
 const props = defineProps<{
   data: TNode
@@ -41,13 +42,11 @@ if (canFold) store.unfolded[index] = true
       @mouseleave="store.leaveHighlight()"
     >
       <span class="unfold-icon-container">
-        <v-icon v-if="canFold" size="16" @click="store.unfolded[index] = !store.unfolded[index]">{{
-          !!store.unfolded[index] ? 'mdi-minus' : 'mdi-plus'
-        }}</v-icon>
+        <v-icon v-if="canFold" size="16" @click="store.unfolded[index] = !store.unfolded[index]" :icon="!!store.unfolded[index] ? mdiMinus : mdiPlus" />
       </span>
       <v-tooltip open-on-click open-on-hover location="top">
         <template v-slot:activator="{ props }">
-          <v-icon class="mr-1" size="xs" v-bind="props">mdi-information-slab-circle-outline</v-icon>
+          <v-icon class="mr-1" size="xs" v-bind="props" :icon="mdiInformationSlabCircleOutline" />
         </template>
         <div class="keyprop-details">
           <div>
