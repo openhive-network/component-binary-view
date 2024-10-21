@@ -114,6 +114,16 @@ export const useBinaryViewStore = defineStore('binaryView', {
         end: -1
       };
     },
+    normalizeHexValue(data: number, compareData?: number) {
+      let hexData = data.toString(16)
+
+      if (compareData !== undefined)
+        hexData = hexData.padStart(compareData.toString(16).length, '0')
+
+      if (hexData.length % 2 === 1) hexData = `0${hexData}`
+
+      return `0x${this.setCase(hexData)}`
+    },
     setCase(value: string) {
       if (this.uppercase)
         return value.toUpperCase();

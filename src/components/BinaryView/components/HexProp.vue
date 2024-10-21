@@ -30,8 +30,7 @@ const setFocusHighligh = () => {
 <template>
   <span :class="{ 'binary-view-force-bold': store.shouldHighlight(range.start, range.end) }">
     <span
-      @click="store.copyBinary(index), setFocusHighligh()"
-      v-on:click.alt="store.copyHex(index), setFocusHighligh()"
+      @click="setFocusHighligh()"
       v-click-outside="leaveFocusHighlight"
       :style="{
         color: colors.css.color,

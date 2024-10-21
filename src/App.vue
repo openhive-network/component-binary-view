@@ -57,6 +57,6 @@ if (savedTx) {
         </v-card>
       </template>
     </v-dialog>
-    <BinaryView class="mt-4" v-if="data" :data="data" />
+    <BinaryView @copy="console.log('copied')" class="mt-4" v-if="data" :data="data" />
   </main>
 </template>

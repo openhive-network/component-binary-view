@@ -10,14 +10,6 @@ const props = defineProps<{
 
 const { index, nestedLevel, colors, key, displayValue, range } = store.nextData('KeyProp')
 
-const normalizeHexValue = (data: number) => {
-  let hexData = data.toString(16)
-
-  if (hexData.length % 2 === 1) hexData = `0${hexData}`
-
-  return `0x${hexData}`
-}
-
 let isFocused = false
 
 const leaveFocusHighlight = () => {
@@ -45,7 +37,6 @@ if (canFold) store.unfolded[index] = true
   <div :class="{ 'binary-view-force-bold': store.shouldHighlight(range.start, range.end) }">
     <div
       :style="{ 'margin-left': `${nestedLevel * 16}px` }"
-      class="props-key-data"
       @mouseenter="store.setHighligh(range.start, range.end)"
       @mouseleave="store.leaveHighlight()"
     >
@@ -63,16 +54,16 @@ if (canFold) store.unfolded[index] = true
             <span class="mr-2">Size: </span><b>{{ (range.end - range.start) / 2 }}B</b>
           </div>
           <div>
-            <span class="mr-2">Start: </span><b>{{ normalizeHexValue(range.start / 2) }}</b>
+            <span class="mr-2">Start: </span><b>{{ store.normalizeHexValue(range.start / 2, range.end / 2) }}</b>
           </div>
           <div>
-            <span class="mr-2">End: </span><b>{{ normalizeHexValue(range.end / 2) }}</b>
+            <span class="mr-2">End: </span><b>{{ store.normalizeHexValue(range.end / 2) }}</b>
           </div>
         </div>
       </v-tooltip>
       <span
-        @click="store.copyBinary(index), setFocusHighligh()"
-        v-on:click.alt="store.copyHex(index), setFocusHighligh()"
+        class="props-key-data"
+        @click="setFocusHighligh()"
         v-click-outside="leaveFocusHighlight"
       >
         <span v-if="displayValue === undefined">

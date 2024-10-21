@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import './BinaryView.css' // Global styles shared between all components
+import BinaryDataHeader from './components/BinaryDataHeader.vue';
 import { type IBinaryView } from './types'
 import HexProp from './components/HexProp.vue'
 import KeyProp from './components/KeyProp.vue'
 import ActionButtons from './components/ActionButtons.vue'
 import { useBinaryViewStore } from './store'
-import { watch } from 'vue'
+import { watch, defineEmits } from 'vue'
+
+const emit = defineEmits(['copy'])
 
 const store = useBinaryViewStore()
 
@@ -29,9 +32,10 @@ store.indexBinaryData(props.data)
 
 <template>
   <div>
+    <BinaryDataHeader />
     <div class="binary-container" :key="props.data.binary">
       <div class="left-pane">
-        <ActionButtons class="left-pane-actions-buttons" />
+        <ActionButtons @copy="emit('copy')" class="left-pane-actions-buttons" />
         <div class="left-pane-index">
           <div class="left-pane-index-header">:</div>
           <div
