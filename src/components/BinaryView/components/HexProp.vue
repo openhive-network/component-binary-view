@@ -46,12 +46,13 @@ const setFocusHighligh = () => {
         {{ hexByte }}
       </span>
     </span>
-    <HexProp
-      v-if="props.data.type !== 'scalar' && props.data.children.length > 0"
-      v-for="(data, propsIndex) in props.data.children"
-      :key="propsIndex"
-      :data="data"
-    />
+    <span v-if="props.data.type !== 'scalar' && props.data.children.length > 0">
+      <HexProp
+        v-for="(data, propsIndex) in props.data.children"
+        :key="propsIndex"
+        :data="data"
+      />
+    </span>
   </span>
 </template>
 

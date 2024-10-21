@@ -25,7 +25,7 @@ import BinaryView from '@/components/BinaryView'
 
 ## Web component
 
-Upon [building](#build-for-production) there will be created a directory named `dist-wc`, where [Web Component]() files will be located
+Upon [building](#build-for-production) there will be created a directory named `dist-wc`, where [Web Component](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) files will be located
 
 ## Development
 

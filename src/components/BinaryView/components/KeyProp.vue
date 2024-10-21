@@ -97,13 +97,14 @@ if (canFold) store.unfolded[index] = true
         </span>
       </span>
     </div>
-    <KeyProp
-      v-if="props.data.type !== 'scalar' && props.data.children.length > 0"
-      :style="{ display: !!store.unfolded[index] ? 'block' : 'none' }"
-      v-for="(data, propsIndex) in props.data.children"
-      :key="propsIndex"
-      :data="data"
-    />
+    <div v-if="props.data.type !== 'scalar' && props.data.children.length > 0">
+      <KeyProp
+        :style="{ display: !!store.unfolded[index] ? 'block' : 'none' }"
+        v-for="(data, propsIndex) in props.data.children"
+        :key="propsIndex"
+        :data="data"
+      />
+    </div>
   </div>
 </template>
 
