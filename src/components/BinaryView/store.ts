@@ -89,6 +89,14 @@ export const useBinaryViewStore = defineStore('binaryView', {
     },
     /* Public actions: */
     indexBinaryData(data: IBinaryView) {
+      data.offsets = [{
+        children: data.offsets,
+        key: 'transaction',
+        offset: 0,
+        type: 'object',
+        size: data.binary.length / 2
+      }]; // Add virtual root node
+
       this.data = data;
 
       this.data.binary = this.setCase(this.data.binary);

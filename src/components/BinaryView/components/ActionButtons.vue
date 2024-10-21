@@ -9,46 +9,44 @@ const emit = defineEmits(['copy'])
 
 <template>
   <div class="d-flex flex-column ga-1">
-    <v-btn
-      @click="store.copyBinary(), emit('copy')"
-      size="x-small"
-      icon
-      height="30"
-      width="30"
-      border="sm"
-      rounded="lg"
-    >
-      <v-icon>mdi-hexadecimal</v-icon>
-      <v-tooltip activator="parent" location="end">
-        Copy binary
-        <span v-if="store.focusHighlightRange.start >= 0">
-          (selected range)
-        </span>
-        <span v-else>
-          (entire buffer)
-        </span>
-      </v-tooltip>
-    </v-btn>
-    <v-btn
-      @click="store.copyHex(), emit('copy')"
-      size="x-small"
-      icon
-      height="30"
-      width="30"
-      border="sm"
-      rounded="lg"
-    >
-      <v-icon>mdi-content-copy</v-icon>
-      <v-tooltip activator="parent" location="end">
-        Copy hex
-        <span v-if="store.focusHighlightRange.start >= 0">
-          (selected range)
-        </span>
-        <span v-else>
-          (entire buffer)
-        </span>
-      </v-tooltip>
-    </v-btn>
+    <v-tooltip location="end">
+      <template v-slot:activator="{ props }">
+        <div v-bind="props">
+          <v-btn
+            @click="store.copyBinary(), emit('copy')"
+            size="x-small"
+            :disabled="store.focusHighlightRange.start < 0"
+            icon
+            height="30"
+            width="30"
+            border="sm"
+            rounded="lg"
+          >
+            <v-icon>mdi-hexadecimal</v-icon>
+          </v-btn>
+        </div>
+      </template>
+      <span>Copy binary selected range</span>
+    </v-tooltip>
+    <v-tooltip location="end">
+      <template v-slot:activator="{ props }">
+        <div v-bind="props">
+          <v-btn
+            @click="store.copyHex(), emit('copy')"
+            size="x-small"
+            :disabled="store.focusHighlightRange.start < 0"
+            icon
+            height="30"
+            width="30"
+            border="sm"
+            rounded="lg"
+          >
+            <v-icon>mdi-content-copy</v-icon>
+          </v-btn>
+        </div>
+      </template>
+      <span>Copy hex selected range</span>
+    </v-tooltip>
     <v-divider class="my-1" />
     <v-btn
       @click="store.foldAll()"
