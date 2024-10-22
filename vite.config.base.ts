@@ -9,13 +9,7 @@ import autoprefixer from 'autoprefixer';
 // https://vitejs.dev/config/
 const userConfig: UserConfig = {
   plugins: [
-    Vue({
-      template: {
-        compilerOptions: {
-          isCustomElement: (tag) => tag.includes('binary-view')
-        }
-      }
-    }),
+    Vue(),
   ],
   css: {
     postcss: {
