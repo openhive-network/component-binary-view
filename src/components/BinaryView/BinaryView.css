@@ -34,7 +34,7 @@
 
 .binary-view-left-pane-binary-header > span {
   padding: 0 3px;
-  color: white;
+  color: currentColor;
 }
 
 .binary-view-left-pane-index > div {
@@ -42,7 +42,7 @@
 }
 
 .binary-view-left-pane-index {
-  color: white;
+  color: currentColor;
   text-align: right;
   line-height: normal;
   font-family: 'Courier New', Courier, monospace;

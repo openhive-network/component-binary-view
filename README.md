@@ -23,6 +23,8 @@ import BinaryView from '@/components/BinaryView'
 </template>
 ```
 
+> Note: `dark` property is still in beta version and only dark theme is currently fully supported
+
 ## Web component
 
 Upon [building](#build-for-production) there will be created a directory named `dist-wc`, where [Web Component](https://developer.mozilla.org/en-US/docs/Web/API/Web_components) files will be located
