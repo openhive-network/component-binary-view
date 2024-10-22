@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { TNode } from '../types'
+import { Icon } from './ui/icon'
+import { Tooltip } from './ui/tooltip'
 import { useBinaryViewStore } from '../store'
 const store = useBinaryViewStore()
 
@@ -20,10 +22,10 @@ const leaveFocusHighlight = () => {
 
 const setFocusHighligh = () => {
   setTimeout(() => {
-    if (isFocused) store.leaveFocusHighlight()
-    else store.setFocusHighlight(range.start, range.end)
+    if (isFocused) return leaveFocusHighlight()
 
-    isFocused = !isFocused
+    store.setFocusHighlight(range.start, range.end)
+    isFocused = true
   }, 0)
 }
 
@@ -41,29 +43,36 @@ if (canFold) store.unfolded[index] = true
       @mouseenter="store.setHighligh(range.start, range.end)"
       @mouseleave="store.leaveHighlight()"
     >
-      <span class="binary-view-keyprop-unfold-icon-container">
-        <v-icon v-if="canFold" size="16" @click="store.unfolded[index] = !store.unfolded[index]" :icon="!!store.unfolded[index] ? mdiMinus : mdiPlus" />
+      <span class="binary-view-keyprop-unfold-icon-container opacity-75">
+        <Icon
+          v-if="canFold"
+          :size="16"
+          class="cursor-pointer"
+          @click="store.unfolded[index] = !store.unfolded[index]"
+          :icon="!!store.unfolded[index] ? mdiMinus : mdiPlus"
+        />
       </span>
-      <v-tooltip open-on-click open-on-hover location="top">
-        <template v-slot:activator="{ props }">
-          <v-icon class="mr-1" size="xs" v-bind="props" :icon="mdiInformationSlabCircleOutline" />
+      <Tooltip location="top">
+        <Icon class="mr-1 opacity-75" :size="16" :icon="mdiInformationSlabCircleOutline" />
+        <template v-slot:text>
+          <div class="binary-view-keyprop-keyprop-details">
+            <div>
+              <span class="mr-2">Size: </span><b>{{ (range.end - range.start) / 2 }}B</b>
+            </div>
+            <div>
+              <span class="mr-2">Start: </span
+              ><b>{{ store.normalizeHexValue(range.start / 2, range.end / 2) }}</b>
+            </div>
+            <div>
+              <span class="mr-2">End: </span><b>{{ store.normalizeHexValue(range.end / 2) }}</b>
+            </div>
+          </div>
         </template>
-        <div class="binary-view-keyprop-keyprop-details">
-          <div>
-            <span class="mr-2">Size: </span><b>{{ (range.end - range.start) / 2 }}B</b>
-          </div>
-          <div>
-            <span class="mr-2">Start: </span><b>{{ store.normalizeHexValue(range.start / 2, range.end / 2) }}</b>
-          </div>
-          <div>
-            <span class="mr-2">End: </span><b>{{ store.normalizeHexValue(range.end / 2) }}</b>
-          </div>
-        </div>
-      </v-tooltip>
+      </Tooltip>
       <span
-        class="binary-view-keyprop-props-key-data"
-        @click="setFocusHighligh()"
+        class="binary-view-keyprop-props-key-data text-sm"
         v-click-outside="leaveFocusHighlight"
+        @click="setFocusHighligh()"
       >
         <span v-if="displayValue === undefined">
           <span
@@ -89,7 +98,10 @@ if (canFold) store.unfolded[index] = true
             >{{ key }}</span
           >
           <span v-if="props.data.type === 'scalar'"
-            >: <span class="binary-view-keyprop-display-value">{{ JSON.stringify(displayValue) }}</span></span
+            >:
+            <span class="binary-view-keyprop-display-value">{{
+              JSON.stringify(displayValue)
+            }}</span></span
           >
           <span v-else
             >: <span class="binary-view-keyprop-display-value">{{ displayValue }}</span></span

@@ -1,8 +1,17 @@
 <script setup lang="ts">
 import { useBinaryViewStore } from '../store'
-import { defineEmits } from 'vue';
 
-import { mdiHexadecimal, mdiContentCopy, mdiUnfoldLessVertical, mdiUnfoldMoreVertical } from '@mdi/js';
+import { Button } from './ui/button'
+import { Tooltip } from './ui/tooltip'
+import { Icon } from './ui/icon'
+import { Separator } from './ui/separator'
+
+import {
+  mdiHexadecimal,
+  mdiContentCopy,
+  mdiUnfoldLessVertical,
+  mdiUnfoldMoreVertical
+} from '@mdi/js'
 
 const store = useBinaryViewStore()
 
@@ -10,69 +19,35 @@ const emit = defineEmits(['copy'])
 </script>
 
 <template>
-  <div class="d-flex flex-column ga-1">
-    <v-tooltip location="end">
-      <template v-slot:activator="{ props }">
-        <div v-bind="props">
-          <v-btn
-            @click="store.copyBinary(), emit('copy')"
-            size="x-small"
-            :disabled="store.focusHighlightRange.start < 0"
-            icon
-            height="30"
-            width="30"
-            border="sm"
-            rounded="lg"
-          >
-            <v-icon :icon="mdiHexadecimal"/>
-          </v-btn>
-        </div>
-      </template>
-      <span>Copy binary selected range</span>
-    </v-tooltip>
-    <v-tooltip location="end">
-      <template v-slot:activator="{ props }">
-        <div v-bind="props">
-          <v-btn
-            @click="store.copyHex(), emit('copy')"
-            size="x-small"
-            :disabled="store.focusHighlightRange.start < 0"
-            icon
-            height="30"
-            width="30"
-            border="sm"
-            rounded="lg"
-          >
-            <v-icon :icon="mdiContentCopy" />
-          </v-btn>
-        </div>
-      </template>
-      <span>Copy hex selected range</span>
-    </v-tooltip>
-    <v-divider class="my-1" />
-    <v-btn
-      @click="store.foldAll()"
-      size="x-small"
-      icon
-      height="30"
-      width="30"
-      border="sm"
-      rounded="lg"
-    >
-      <v-icon :icon=mdiUnfoldLessVertical />
-      <v-tooltip activator="parent" location="end">Fold all</v-tooltip>
-    </v-btn>
-    <v-btn
-      @click="store.unfoldAll()"
-      size="x-small"
-      icon
-      height="30"
-      width="30"
-      border="sm"
-      rounded="lg"
-    >
-      <v-icon :icon="mdiUnfoldMoreVertical" />
-      <v-tooltip activator="parent" location="end">Unfold all</v-tooltip>
-    </v-btn>
+  <div class="flex flex-col gap-1">
+    <Tooltip text="Copy binary selected range" side="right">
+      <Button
+        @click="store.copyBinary(), emit('copy')"
+        :disabled="store.focusHighlightRange.start < 0"
+        size="icon"
+        variant="outline"
+        ><Icon :size="18" :icon="mdiHexadecimal"
+      /></Button>
+    </Tooltip>
+    <Tooltip text="Copy hex selected range" side="right">
+      <Button
+        @click="store.copyHex(), emit('copy')"
+        :disabled="store.focusHighlightRange.start < 0"
+        size="icon"
+        variant="outline"
+        ><Icon :size="18" :icon="mdiContentCopy"
+      /></Button>
+    </Tooltip>
+    <Separator class="my-1" :thickness="2" decorative />
+    <Tooltip text="Fold all" side="right">
+      <Button size="icon" @click="store.foldAll()" variant="outline"
+        ><Icon :size="18" :icon="mdiUnfoldLessVertical"
+      /></Button>
+    </Tooltip>
+    <Tooltip text="Unfold all" side="right">
+      <Button size="icon" @click="store.unfoldAll()" variant="outline"
+        ><Icon :size="18" :icon="mdiUnfoldMoreVertical"
+      /></Button>
+    </Tooltip>
   </div>
 </template>

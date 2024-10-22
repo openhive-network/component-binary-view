@@ -29,34 +29,10 @@ if (savedTx) {
 
 <template>
   <main>
-    <v-dialog max-width="500">
-      <template v-slot:activator="{ props: activatorProps }">
-        <v-btn
-          v-bind="activatorProps"
-          color="surface-variant"
-          text="Provide transaction here"
-          variant="flat"
-        ></v-btn>
-      </template>
-
-      <template v-slot:default="{ isActive }">
-        <v-card title="Provide transaction">
-          <v-card-text>
-            <v-textarea
-              clearable
-              v-model="transaction"
-              label="JSON transaction"
-              variant="outlined"
-            ></v-textarea>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-
-            <v-btn text="OK" @click="(isActive.value = false), applyTransaction()" />
-          </v-card-actions>
-        </v-card>
-      </template>
-    </v-dialog>
-    <BinaryView @copy="console.log('copied')" class="mt-4" v-if="data.length > 0" :data="data" />
+    <header>
+      <textarea v-model="transaction" placeholder="Provide JSON transaction here" />
+      <button @click="applyTransaction()">Apply</button>
+    </header>
+    <BinaryView @copy="console.log('copied')" v-if="data.length > 0" dark :data="data" />
   </main>
 </template>

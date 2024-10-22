@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import BinaryDataHeader from './components/BinaryDataHeader.vue';
+import BinaryDataHeader from './components/BinaryDataHeader.vue'
 import { type IBinaryView } from './types'
 import HexProp from './components/HexProp.vue'
 import KeyProp from './components/KeyProp.vue'
 import ActionButtons from './components/ActionButtons.vue'
 import { useBinaryViewStore } from './store'
-import { watch, defineEmits } from 'vue'
+import { watch } from 'vue'
 
 const emit = defineEmits(['copy'])
 
@@ -13,25 +13,26 @@ const store = useBinaryViewStore()
 
 const props = defineProps<{
   data: string // We use string due to DOM limitations in propagating data to Web Components
-  rowbytes?: number
-  uppercase?: boolean
+  rowbytes?: number | string
+  uppercase?: boolean | string
+  dark?: boolean | string
 }>()
 
 watch(props, () => {
   store.resetStore()
-  store.setBytesInRow(props.rowbytes)
-  store.setUppercase(props.uppercase)
+  store.setBytesInRow(Number.parseInt((props.rowbytes as string) ?? 16))
+  store.setUppercase(String(props.uppercase) === 'true')
   store.indexBinaryData(JSON.parse(props.data) as IBinaryView)
 })
 
-store.setBytesInRow(props.rowbytes)
-store.setUppercase(props.uppercase)
+store.setBytesInRow(Number.parseInt((props.rowbytes as string) ?? 16))
+store.setUppercase(String(props.uppercase) === 'true')
 store.indexBinaryData(JSON.parse(props.data) as IBinaryView)
 </script>
 
 <template>
-  <div>
-    <BinaryDataHeader />
+  <div :class="['binary-data-body', { dark: String(props.dark) === 'true' }]">
+    <BinaryDataHeader class="mb-4" />
     <div class="binary-view-container" :key="store.data.binary">
       <div class="binary-view-left-pane">
         <ActionButtons @copy="emit('copy')" class="binary-view-left-pane-actions-buttons" />

@@ -15,7 +15,6 @@
 /* BinaryView.css */
 
 .binary-view-container {
-  font-family: 'Courier New', Courier, monospace;
   display: flex;
   flex-direction: row;
   user-select: none;
@@ -25,6 +24,7 @@
   display: flex;
   justify-content: center;
   margin-right: 20px;
+  font-size: 15px;
 }
 
 .binary-view-left-pane-binary-header,
@@ -45,6 +45,7 @@
   color: white;
   text-align: right;
   line-height: normal;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .binary-view-left-pane-actions-buttons {
@@ -55,11 +56,12 @@
 .binary-view-left-pane > .binary-view-left-pane-hex-data {
   display: inline-block;
   line-height: normal;
-  font-size: 15px;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .binary-view-right-pane {
   width: 100%;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .binary-view-left-pane,
@@ -69,7 +71,6 @@
 }
 
 /* KeyProp.vue */
-
 
 .binary-view-keyprop-unfold-icon-container {
   width: 16px;
@@ -91,7 +92,6 @@
 }
 
 /* HexProp.vue */
-
 
 .binary-view-hexprop-bytes-group {
   cursor: pointer;

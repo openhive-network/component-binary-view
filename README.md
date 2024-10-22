@@ -19,7 +19,7 @@ import BinaryView from '@/components/BinaryView'
 </script>
 
 <template>
-  <BinaryView :data="data" :rowbytes="16" :uppercase="false" @copy="console.log('copied')" />
+  <BinaryView :data="data" :rowbytes="16" :uppercase="false" @copy="console.log('copied')" dark />
 </template>
 ```
 

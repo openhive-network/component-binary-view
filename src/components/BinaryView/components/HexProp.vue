@@ -12,16 +12,16 @@ const { colors, range } = store.nextData('HexProp')
 let isFocused = false
 
 const leaveFocusHighlight = () => {
-  store.leaveFocusHighlight()
   isFocused = false
+  store.leaveFocusHighlight()
 }
 
 const setFocusHighligh = () => {
   setTimeout(() => {
-    if (isFocused) store.leaveFocusHighlight()
-    else store.setFocusHighlight(range.start, range.end)
+    if (isFocused) return leaveFocusHighlight()
 
-    isFocused = !isFocused
+    store.setFocusHighlight(range.start, range.end)
+    isFocused = true
   }, 0)
 }
 </script>
@@ -42,16 +42,16 @@ const setFocusHighligh = () => {
       @mouseleave="store.leaveHighlight()"
       class="binary-view-hexprop-bytes-group binary-view-force-bold-rarget"
     >
-      <span class="binary-view-hexprop-single-byte" v-for="(hexByte, index) in range.hex" :key="index">
+      <span
+        class="binary-view-hexprop-single-byte"
+        v-for="(hexByte, index) in range.hex"
+        :key="index"
+      >
         {{ hexByte }}
       </span>
     </span>
     <span v-if="props.data.type !== 'scalar' && props.data.children.length > 0">
-      <HexProp
-        v-for="(data, propsIndex) in props.data.children"
-        :key="propsIndex"
-        :data="data"
-      />
+      <HexProp v-for="(data, propsIndex) in props.data.children" :key="propsIndex" :data="data" />
     </span>
   </span>
 </template>
