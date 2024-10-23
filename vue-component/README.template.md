@@ -33,7 +33,9 @@ createApp(App)
 
 ### Nuxt usage
 
-`plugins/binary-view.ts`:
+> Note: It is preferred to use client-only plugin version of this component
+
+`plugins/binary-view.client.ts`:
 
 ```diff
 + import '@hiveio/component-binary-view/styles';
