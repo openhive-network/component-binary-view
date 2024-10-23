@@ -13,19 +13,13 @@ const props = defineProps<{
 
 const { index, nestedLevel, colors, key, displayValue, range } = store.nextData('KeyProp')
 
-let isFocused = false
-
 const leaveFocusHighlight = () => {
   store.leaveFocusHighlight()
-  isFocused = false
 }
 
 const setFocusHighligh = () => {
   setTimeout(() => {
-    if (isFocused) return leaveFocusHighlight()
-
     store.setFocusHighlight(range.start, range.end)
-    isFocused = true
   }, 0)
 }
 
@@ -39,7 +33,13 @@ if (canFold) store.unfolded[index] = true
 <template>
   <div :class="{ 'binary-view-force-bold': store.shouldHighlight(range.start, range.end) }">
     <div
-      :style="{ 'margin-left': `${nestedLevel * 16}px` }"
+      :style="{
+        'padding-left': `${nestedLevel * 16}px`,
+        ...colors.css,
+        'background-color': store.shouldHighlight(range.start, range.end)
+          ? 'rgba(68,85,90,0.15)'
+          : 'transparent'
+      }"
       @mouseenter="store.setHighligh(range.start, range.end)"
       @mouseleave="store.leaveHighlight()"
     >
@@ -75,28 +75,11 @@ if (canFold) store.unfolded[index] = true
         @click="setFocusHighligh()"
       >
         <span v-if="displayValue === undefined">
-          <span
-            :style="{
-              ...colors.css,
-              'background-color': store.shouldHighlight(range.start, range.end)
-                ? colors.css['background-color']
-                : 'transparent'
-            }"
-            class="px-1 binary-view-force-bold-rarget"
-            >{{ key }}</span
+          <span class="px-1 binary-view-force-bold-rarget">{{ key }}</span
           >:
         </span>
         <span v-else class="pr-1">
-          <span
-            :style="{
-              ...colors.css,
-              'background-color': store.shouldHighlight(range.start, range.end)
-                ? colors.css['background-color']
-                : 'transparent'
-            }"
-            class="px-1 binary-view-force-bold-rarget"
-            >{{ key }}</span
-          >
+          <span class="px-1 binary-view-force-bold-rarget">{{ key }}</span>
           <span v-if="props.data.type === 'scalar'"
             >:
             <span class="binary-view-keyprop-display-value">{{
