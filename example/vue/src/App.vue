@@ -3,5 +3,5 @@ import data from './data';
 </script>
 
 <template>
-  <BinaryView :data="JSON.stringify(data)" dark />
+  <BinaryView :data="data" dark />
 </template>

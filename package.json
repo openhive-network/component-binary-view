@@ -16,6 +16,7 @@
     "prepack-ce": "tsx render-package.ts web-component dist-wc",
     "prepack-vue": "tsx render-package.ts vue-component dist-vue",
     "pack": "cd dist-wc && npm pack && cd ../dist-vue && npm pack",
+    "publish": "cd dist-wc && npm publish && cd ../dist-vue && npm publish",
     "type-check": "vue-tsc --build --force",
     "lint": "eslint src --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/"
