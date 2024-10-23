@@ -16,6 +16,8 @@ dist-vue
 coverage
 *.local
 
+examples/**/pnpm-lock.yaml
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

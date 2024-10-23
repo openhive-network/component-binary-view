@@ -31,6 +31,27 @@ createApp(App)
 </template>
 ```
 
+### Nuxt usage
+
+`plugins/binary-view.ts`:
+
+```diff
++ import '@hiveio/component-binary-view/styles';
++ import BinaryView from '@hiveio/component-binary-view';
+
++ export default defineNuxtPlugin((nuxtApp) => {
++   nuxtApp.vueApp.use(BinaryView);
++ });
+```
+
+`App.vue`:
+
+```diff
+<template>
++  <BinaryView :data="waxTxBinaryData" dark />
+</template>
+```
+
 ## Component Properties
 
 | Name | Type | Default | Description |
