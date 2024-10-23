@@ -1,12 +1,12 @@
-import themeStyles from './components/BinaryView/assets/styles.css?inline';
+import themeStyles from '../src/components/BinaryView/assets/styles.css?inline';
 import tailwindStyles from 'tailwindcss/tailwind.css?inline';
-import binaryViewStyles from './components/BinaryView/BinaryView.css?inline';
+import binaryViewStyles from '../src/components/BinaryView/BinaryView.css?inline';
 
 import { defineCustomElement as VueDefineCustomElement, h, createApp, getCurrentInstance, type App } from 'vue';
 import { createWebComponent } from 'vue-web-component-wrapper';
 
-import BinaryView from './components/BinaryView/BinaryView.vue';
-import { appInit } from './app.init';
+import BinaryView from '../src/components/BinaryView/BinaryView.vue';
+import { appInit } from '../src/app.init';
 
 export const pluginsWrapper = {
   install(GivenVue: App) {

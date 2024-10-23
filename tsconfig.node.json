@@ -5,7 +5,9 @@
     "vitest.config.*",
     "cypress.config.*",
     "nightwatch.conf.*",
-    "playwright.config.*"
+    "playwright.config.*",
+    "vue-component/vite.config.ts",
+    "web-component/vite.config.ts"
   ],
   "compilerOptions": {
     "composite": true,

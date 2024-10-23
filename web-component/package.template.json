@@ -1,0 +1,25 @@
+{
+  "name": "<%= it.name %>-web-component",
+  "description": "<%= it.description %>",
+  "version": "<%= it.version %>",
+  "private": false,
+  "type": "module",
+  "files": [
+    "./binary-view.js",
+    "./binary-view.umd.cjs"
+  ],
+  "license": "<%= it.license %>",
+  "author": "<%= it.author %>",
+  "main": "./binary-view.umd.cjs",
+  "module": "./binary-view.js",
+  "exports": {
+    ".": {
+      "import": "./binary-view.js",
+      "require": "./binary-view.umd.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {},
+  "devDependencies": {},
+  "dependencies": {}
+}

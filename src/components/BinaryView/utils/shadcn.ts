@@ -1,6 +1,7 @@
-import { type ClassValue, clsx } from 'clsx'
-import { twMerge } from 'tailwind-merge'
+import type { HTMLAttributes } from "vue";
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
+export const cn = (...inputs: Array<string | HTMLAttributes['class']>) => {
+  const classes = inputs.filter(Boolean).join(' ').split(' ');
+  const uniqueClasses = new Set(classes);
+  return Array.from(uniqueClasses).join(' ');
+};
