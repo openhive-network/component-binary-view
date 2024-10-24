@@ -1,5 +1,5 @@
 import { createPinia, getActivePinia } from "pinia";
-import type { App, DirectiveBinding } from "vue";
+import { inject, type App, type DirectiveBinding } from "vue";
 
 type ClickOutsideElement = HTMLElement & { clickOutsideEvent: (event: MouseEvent) => void };
 
@@ -25,7 +25,7 @@ export const appInit = (GivenVue: App) => {
 
   Vue.directive("click-outside", clickOutside);
 
-  if (!getActivePinia()) {
+  if (!inject(Symbol('pinia'), false)) {
     const pinia = createPinia();
     Vue.use(pinia);
   }

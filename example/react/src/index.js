@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
-import 'binary-view'
+import '@hiveio/component-binary-view-web-component'
 
 import data from './data.js'
 import './index.css'

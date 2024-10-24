@@ -9,6 +9,8 @@ pnpm add <%= it.name %>
 
 ```
 
+### Vue app
+
 `main.ts`:
 
 ```diff
@@ -31,7 +33,7 @@ createApp(App)
 </template>
 ```
 
-### Nuxt usage
+### Nuxt app
 
 > Note: It is preferred to use client-only plugin version of this component
 
