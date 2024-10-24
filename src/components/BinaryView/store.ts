@@ -176,8 +176,8 @@ export const useBinaryViewStore = defineStore('binaryView', {
       this.focusHighlightRange.start = -1;
       this.focusHighlightRange.end = -1;
     },
-    copyHex(index?: number) { // When no index provided - copy entire buffer
-      const hex = index === undefined ? this.data.binary : this.rangeData[index].fullHexString;
+    copyHex() {
+      const hex = this.data.binary.slice(this.focusHighlightRange.start, this.focusHighlightRange.end);
 
       navigator.clipboard.writeText(hex);
     },
@@ -189,8 +189,8 @@ export const useBinaryViewStore = defineStore('binaryView', {
       for (const index in this.unfolded)
         this.unfolded[index] = true;
     },
-    copyBinary(index?: number) { // When no index provided - copy entire buffer
-      const hex = (index === undefined ? this.data.binary : this.rangeData[index].fullHexString).match(/.{1,2}/g) as RegExpMatchArray;
+    copyBinary() {
+      const hex = this.data.binary.slice(this.focusHighlightRange.start, this.focusHighlightRange.end).match(/.{1,2}/g) as RegExpMatchArray;
 
       const bytes = new Uint8Array(hex as any).map(byte => parseInt(String(byte), 16));
 
