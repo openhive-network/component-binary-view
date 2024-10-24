@@ -25,7 +25,8 @@ export const appInit = (GivenVue: App) => {
 
   Vue.directive("click-outside", clickOutside);
 
-  if (!inject(Symbol('pinia'), false)) {
+  // if (!inject(Symbol('pinia'), false)) { // TODO: Find out a way to eliminate pinia warnings
+  if (!getActivePinia()) {
     const pinia = createPinia();
     Vue.use(pinia);
   }
