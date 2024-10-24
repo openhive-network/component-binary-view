@@ -19,8 +19,8 @@ const delegatedProps = computed(() => {
     v-bind="delegatedProps"
     :class="
       cn(
-        'shrink-0 bg-border relative',
-        props.orientation === 'vertical' ? 'h-full' : 'w-full',
+        'bvc-tw-shrink-0 bvc-tw-bg-border bvc-tw-relative',
+        props.orientation === 'vertical' ? 'bvc-tw-h-full' : 'bvc-tw-w-full',
         props.class
       )
     "
@@ -34,8 +34,8 @@ const delegatedProps = computed(() => {
       v-if="props.label"
       :class="
         cn(
-          'text-xs text-muted-foreground bg-background absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center',
-          props.orientation === 'vertical' ? 'px-1 py-2' : 'py-1 px-2'
+          'bvc-tw-text-xs bvc-tw-text-muted-foreground bvc-tw-bg-background bvc-tw-absolute bvc-tw-top-1/2 bvc-tw-left-1/2 bvc-tw--translate-x-1/2 bvc-tw--translate-y-1/2 bvc-tw-flex bvc-tw-justify-center bvc-tw-items-center',
+          props.orientation === 'vertical' ? 'bvc-tw-px-1 bvc-tw-py-2' : 'bvc-tw-py-1 bvc-tw-px-2'
         )
       "
       :style="

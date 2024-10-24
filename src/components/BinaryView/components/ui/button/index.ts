@@ -3,26 +3,26 @@ import { cva, type VariantProps } from 'class-variance-authority'
 export { default as Button } from './Button.vue'
 
 export const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'bvc-tw-inline-flex bvc-tw-items-center bvc-tw-justify-center bvc-tw-whitespace-nowrap bvc-tw-rounded-md bvc-tw-text-sm bvc-tw-font-medium bvc-tw-ring-offset-background bvc-tw-transition-colors bvc-tw-focus-visible:outline-none bvc-tw-focus-visible:ring-2 bvc-tw-focus-visible:ring-ring bvc-tw-focus-visible:ring-offset-2 bvc-tw-disabled:pointer-events-none bvc-tw-disabled:opacity-50',
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        default: 'bvc-tw-bg-primary bvc-tw-text-primary-foreground bvc-tw-hover:bg-primary/90',
         destructive:
-          'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+          'bvc-tw-bg-destructive bvc-tw-text-destructive-foreground bvc-tw-hover:bg-destructive/90',
         outline:
-          'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+          'bvc-tw-border bvc-tw-border-input bvc-tw-bg-background bvc-tw-hover:bg-accent bvc-tw-hover:text-accent-foreground',
         secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
+          'bvc-tw-bg-secondary bvc-tw-text-secondary-foreground bvc-tw-hover:bg-secondary/80',
+        ghost: 'bvc-tw-hover:bg-accent bvc-tw-hover:text-accent-foreground',
+        link: 'bvc-tw-text-primary bvc-tw-underline-offset-4 bvc-tw-hover:underline',
       },
       size: {
-        default: 'h-10 px-4 py-2',
-        xs: 'h-7 rounded px-2',
-        sm: 'h-9 rounded-md px-3',
-        lg: 'h-11 rounded-md px-8',
-        icon: 'h-8 w-8 rounded-lg',
+        default: 'bvc-tw-h-10 bvc-tw-px-4 bvc-tw-py-2',
+        xs: 'bvc-tw-h-7 bvc-tw-rounded bvc-tw-px-2',
+        sm: 'bvc-tw-h-9 bvc-tw-rounded-md bvc-tw-px-3',
+        lg: 'bvc-tw-h-11 bvc-tw-rounded-md bvc-tw-px-8',
+        icon: 'bvc-tw-h-8 bvc-tw-w-8 bvc-tw-rounded-lg',
       },
     },
     defaultVariants: {

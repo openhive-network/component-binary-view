@@ -70,9 +70,9 @@
 
 @layer base {
   .binary-data-body * {
-    @apply border-border;
+    @apply bvc-tw-border-border;
   }
   .binary-data-body {
-    @apply text-foreground;
+    @apply bvc-tw-text-foreground;
   }
 }

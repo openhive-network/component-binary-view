@@ -19,7 +19,7 @@ const emit = defineEmits(['copy'])
 </script>
 
 <template>
-  <div class="flex flex-col gap-1">
+  <div class="bvc-tw-flex bvc-tw-flex-col bvc-tw-gap-1">
     <Tooltip text="Copy binary selected range" side="right">
       <Button
         @click="store.copyBinary(), emit('copy')"
@@ -38,7 +38,7 @@ const emit = defineEmits(['copy'])
         ><Icon :size="18" :icon="mdiContentCopy"
       /></Button>
     </Tooltip>
-    <Separator class="my-1" :thickness="2" decorative />
+    <Separator class="mbvc-tw-y-1" :thickness="2" decorative />
     <Tooltip text="Fold all" side="right">
       <Button size="icon" @click="store.foldAll()" variant="outline"
         ><Icon :size="18" :icon="mdiUnfoldLessVertical"

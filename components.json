@@ -8,7 +8,7 @@
     "css": "src/components/BinaryView/assets/styles.css",
     "baseColor": "slate",
     "cssVariables": true,
-    "prefix": ""
+    "prefix": "bvc-tw-"
   },
   "framework": "vite",
   "aliases": {

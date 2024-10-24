@@ -31,7 +31,7 @@ store.indexBinaryData(
 
 <template>
   <div :class="['binary-data-body', { dark: String(props.dark) === 'true' }]">
-    <BinaryDataHeader class="mb-4" />
+    <BinaryDataHeader class="bvc-tw-mb-4" />
     <div class="binary-view-container" :key="store.data.binary">
       <div class="binary-view-left-pane">
         <ActionButtons @copy="emit('copy')" class="binary-view-left-pane-actions-buttons" />

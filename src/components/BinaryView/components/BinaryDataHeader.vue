@@ -10,11 +10,11 @@ const store = useBinaryViewStore()
 </script>
 
 <template>
-  <div class="opacity-75 inline-flex flex-row h-[1.2em]">
+  <div class="bvc-tw-opacity-75 bvc-tw-inline-flex bvc-tw-flex-row bvc-tw-h-[1.2em]">
     <div>
       Total size: <b>{{ store.data.binary.length / 2 }}B</b>
     </div>
-    <Separator orientation="vertical" :thickness="2" decorative class="mx-2" />
+    <Separator orientation="vertical" :thickness="2" decorative class="bvc-tw-mx-2" />
     <div>
       Selected range:
       <b v-if="store.focusHighlightRange.start >= 0">
@@ -30,7 +30,7 @@ const store = useBinaryViewStore()
         <Icon :size="16" :icon="mdiMinus" />
       </span>
     </div>
-    <Separator orientation="vertical" :thickness="2" decorative class="mx-2" />
+    <Separator orientation="vertical" :thickness="2" decorative class="bvc-tw-mx-2" />
     <div>
       Highlighted range:
       <b v-if="store.highlightedRange.start >= 0">
