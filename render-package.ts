@@ -65,6 +65,8 @@ const it = {
 
 const packageStr = eta.render("./package.template.json", it);
 const readmeStr = eta.render("./README.template.md", it);
+if (fs.existsSync(path.join(__dirname, inputDir, "binary-view.template.d.ts")))
+  fs.writeFileSync(path.join(__dirname, outputDir, "binary-view.d.ts"), eta.render("./binary-view.template.d.ts", it), { encoding: 'utf8' });
 
 fs.writeFileSync(path.join(__dirname, outputDir, "package.json"), packageStr, { encoding: 'utf8' });
 fs.writeFileSync(path.join(__dirname, outputDir, "README.md"), readmeStr, { encoding: 'utf8' });

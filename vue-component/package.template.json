@@ -4,10 +4,12 @@
   "version": "<%= it.version %>",
   "private": false,
   "type": "module",
+  "types": "./binary-view.d.ts",
   "files": [
     "./binary-view.js",
     "./binary-view.umd.cjs",
-    "./style.css"
+    "./style.css",
+    "./binary-view.d.ts"
   ],
   "license": "<%= it.license %>",
   "author": "<%= it.author %>",
