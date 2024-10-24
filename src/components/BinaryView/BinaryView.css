@@ -14,6 +14,10 @@
 
 /* BinaryView.css */
 
+.binary-data-body {
+  font-family: 'Courier New', Courier, monospace;
+}
+
 .binary-view-container {
   display: flex;
   flex-direction: row;
@@ -45,7 +49,6 @@
   color: currentColor;
   text-align: right;
   line-height: normal;
-  font-family: 'Courier New', Courier, monospace;
 }
 
 .binary-view-left-pane-actions-buttons {

@@ -16,7 +16,7 @@ const store = useBinaryViewStore()
     </div>
     <Separator orientation="vertical" :thickness="2" decorative class="bvc-tw-mx-2" />
     <div>
-      Selected range:
+      <span class="bvc-tw-mr-1 bvc-tw-align-top">Selected range:</span>
       <b v-if="store.focusHighlightRange.start >= 0">
         {{
           store.normalizeHexValue(
@@ -32,7 +32,7 @@ const store = useBinaryViewStore()
     </div>
     <Separator orientation="vertical" :thickness="2" decorative class="bvc-tw-mx-2" />
     <div>
-      Highlighted range:
+      <span class="bvc-tw-mr-1 bvc-tw-align-top">Highlighted range:</span>
       <b v-if="store.highlightedRange.start >= 0">
         {{
           store.normalizeHexValue(store.highlightedRange.start / 2, store.highlightedRange.end / 2)

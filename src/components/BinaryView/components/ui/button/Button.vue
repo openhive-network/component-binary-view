@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<Props>(), {
     :as="as"
     :as-child="asChild"
     :disabled="props.disabled ?? false"
-    :style="{ cursor: props.disabled ? 'default' : 'pointer' }"
+    :style="{ cursor: props.disabled ? 'default' : 'pointer', opacity: props.disabled ? '0.5' : '1' }"
     :class="cn(buttonVariants({ variant, size }), props.class)"
   >
     <slot />
