@@ -3,13 +3,14 @@ import type { TNode } from '../types'
 import { Icon } from './ui/icon'
 import { Tooltip } from './ui/tooltip'
 import { useBinaryViewStore } from '../store'
-const store = useBinaryViewStore()
-
 import { mdiMinus, mdiPlus, mdiInformationSlabCircleOutline } from '@mdi/js'
 
 const props = defineProps<{
-  data: TNode
+  index: number;
+  data: TNode;
 }>()
+
+const store = useBinaryViewStore(props.index)
 
 const { index, nestedLevel, colors, key, displayValue, range } = store.nextData('KeyProp')
 
@@ -47,7 +48,7 @@ if (canFold) store.unfolded[index] = true
         <Icon
           v-if="canFold"
           :size="16"
-          class="cursor-pointer"
+          class="bvc-tw-cursor-pointer"
           @click="store.unfolded[index] = !store.unfolded[index]"
           :icon="!!store.unfolded[index] ? mdiMinus : mdiPlus"
         />
@@ -94,6 +95,7 @@ if (canFold) store.unfolded[index] = true
     </div>
     <div v-if="props.data.type !== 'scalar' && props.data.children.length > 0">
       <KeyProp
+        :index="props.index"
         :style="{ display: !!store.unfolded[index] ? 'block' : 'none' }"
         v-for="(data, propsIndex) in props.data.children"
         :key="propsIndex"

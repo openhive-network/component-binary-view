@@ -4,12 +4,14 @@ import { BinaryViewEmits, type IBinaryView, type IBinaryViewProps } from './type
 import HexProp from './components/HexProp.vue'
 import KeyProp from './components/KeyProp.vue'
 import ActionButtons from './components/ActionButtons.vue'
-import { useBinaryViewStore } from './store'
+import { useIndexingBinaryViewStore, useBinaryViewStore } from './store'
 import { watch } from 'vue'
 
 const emit = defineEmits([...BinaryViewEmits])
 
-const store = useBinaryViewStore()
+const BinaryViewIndex = useIndexingBinaryViewStore().nextIndex();
+
+const store = useBinaryViewStore(BinaryViewIndex)
 
 const props = defineProps<IBinaryViewProps>()
 
@@ -33,10 +35,10 @@ store.indexBinaryData(
 
 <template>
   <div :class="['binary-data-body', { dark: String(props.dark) === 'true' }]">
-    <BinaryDataHeader class="bvc-tw-mb-4" />
+    <BinaryDataHeader :index="BinaryViewIndex" class="bvc-tw-mb-4" />
     <div class="binary-view-container" :key="store.data.binary">
       <div class="binary-view-left-pane">
-        <ActionButtons @copy="emit('copy')" class="binary-view-left-pane-actions-buttons" />
+        <ActionButtons :index="BinaryViewIndex" @copy="emit('copy')" class="binary-view-left-pane-actions-buttons" />
         <div class="binary-view-left-pane-index">
           <div class="binary-view-left-pane-index-header">:</div>
           <div
@@ -58,13 +60,13 @@ store.indexBinaryData(
             </span>
           </div>
           <span v-for="(offset, index) in store.data.offsets" :key="index">
-            <HexProp :data="offset" />
+            <HexProp :index="BinaryViewIndex" :data="offset" />
           </span>
         </div>
       </div>
       <div class="binary-view-right-pane">
         <div v-for="(offset, index) in store.data.offsets" :key="index">
-          <KeyProp :data="offset" />
+          <KeyProp :index="BinaryViewIndex" :data="offset" />
         </div>
       </div>
     </div>

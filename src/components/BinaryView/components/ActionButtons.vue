@@ -13,7 +13,9 @@ import {
   mdiUnfoldMoreVertical
 } from '@mdi/js'
 
-const store = useBinaryViewStore()
+const props = defineProps<{ index: number }>()
+
+const store = useBinaryViewStore(props.index)
 
 const emit = defineEmits(['copy'])
 </script>

@@ -23,7 +23,18 @@ export interface IIndexData {
   range: IBufferRangeData;
 }
 
-export const useBinaryViewStore = defineStore('binaryView', {
+export const useIndexingBinaryViewStore = defineStore('binaryViewIndexed', {
+  state: () => ({
+    index: 0
+  }),
+  actions: {
+    nextIndex() {
+      return this.index++;
+    }
+  }
+});
+
+export const useBinaryViewStore = (storeKeyIndex: number) => (defineStore(`binaryView-${storeKeyIndex}`, {
   state: () => ({
     /* Private props: */
     colors: {} as Record<number, TGenerateRandomColorSpaceOutput>,
@@ -199,4 +210,4 @@ export const useBinaryViewStore = defineStore('binaryView', {
       navigator.clipboard.writeText(binaryString);
     }
   }
-});
+})());

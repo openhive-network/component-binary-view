@@ -6,7 +6,9 @@ import { Icon } from './ui/icon'
 
 import { mdiMinus } from '@mdi/js'
 
-const store = useBinaryViewStore()
+const props = defineProps<{ index: number }>()
+
+const store = useBinaryViewStore(props.index)
 </script>
 
 <template>

@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import type { TNode } from '../types'
 import { useBinaryViewStore } from '../store'
-const store = useBinaryViewStore()
 
 const props = defineProps<{
-  data: TNode
+  index: number;
+  data: TNode;
 }>()
+
+const store = useBinaryViewStore(props.index)
 
 const { colors, range } = store.nextData('HexProp')
 
@@ -45,7 +47,7 @@ const setFocusHighligh = () => {
       </span>
     </span>
     <span v-if="props.data.type !== 'scalar' && props.data.children.length > 0">
-      <HexProp v-for="(data, propsIndex) in props.data.children" :key="propsIndex" :data="data" />
+      <HexProp :index="props.index" v-for="(data, propsIndex) in props.data.children" :key="propsIndex" :data="data" />
     </span>
   </span>
 </template>
