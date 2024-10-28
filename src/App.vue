@@ -49,6 +49,6 @@ if (savedTx) {
       />
       <button @click="applyTransaction()">Apply</button>
     </header>
-    <BinaryView @copy="console.log('copied')" v-if="data.length > 0" :dark="dark" :data="data" />
+    <BinaryView @copy="console.log('copied')" v-if="data.length > 0" rootnode="transaction" :dark="dark" :data="data" />
   </main>
 </template>

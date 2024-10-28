@@ -18,6 +18,7 @@ watch(props, () => {
   store.setBytesInRow(Number.parseInt((props.rowbytes as string) ?? 16))
   store.setUppercase(String(props.uppercase) === 'true')
   store.indexBinaryData(
+    props.rootnode ?? 'transaction',
     typeof props.data === 'object' ? props.data : (JSON.parse(props.data) as IBinaryView)
   )
 })
@@ -25,6 +26,7 @@ watch(props, () => {
 store.setBytesInRow(Number.parseInt((props.rowbytes as string) ?? 16))
 store.setUppercase(String(props.uppercase) === 'true')
 store.indexBinaryData(
+  props.rootnode ?? 'transaction',
   typeof props.data === 'object' ? props.data : (JSON.parse(props.data) as IBinaryView)
 )
 </script>

@@ -10,6 +10,6 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
   <React.StrictMode>
-    <binary-view data={JSON.stringify(data)} dark />
+    <binary-view data={JSON.stringify(data)} rootnode="transaction" dark />
   </React.StrictMode>
 )

@@ -88,11 +88,11 @@ export const useBinaryViewStore = defineStore('binaryView', {
       return this.currentIndex[indexingKey]++;
     },
     /* Public actions: */
-    indexBinaryData(data: IBinaryView) {
-      if (data.offsets[0].key !== 'transaction')
+    indexBinaryData(keyName: string, data: IBinaryView) {
+      if (data.offsets[0].key !== keyName && keyName.length > 0)
         data.offsets = [{
           children: data.offsets,
-          key: 'transaction',
+          key: keyName,
           offset: 0,
           type: 'object',
           size: data.binary.length / 2

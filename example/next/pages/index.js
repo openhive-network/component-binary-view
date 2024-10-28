@@ -8,6 +8,6 @@ export default function Home() {
   });
 
   return (
-    <binary-view data={JSON.stringify(data)} dark />
+    <binary-view data={JSON.stringify(data)} rootnode="transaction" dark />
   );
 }

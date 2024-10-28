@@ -3,5 +3,5 @@ import data from './data';
 </script>
 
 <template>
-  <BinaryView :data="data" dark />
+  <BinaryView :data="data" rootnode="transaction" dark />
 </template>

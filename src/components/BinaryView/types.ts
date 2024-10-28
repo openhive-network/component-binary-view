@@ -8,10 +8,12 @@ export interface IBinaryView {
 }
 
 export interface IBinaryViewProps {
-  data: IBinaryView | string // We use string due to DOM limitations in propagating data to Web Components
-  rowbytes?: number | string
-  uppercase?: boolean | string
-  dark?: boolean | string
+   // We use string due to DOM limitations in propagating data to Web Components
+  data: IBinaryView | string;
+  rootnode?: string; // Defaults to "transaction"
+  rowbytes?: number | string;
+  uppercase?: boolean | string;
+  dark?: boolean | string;
 }
 
 export const BinaryViewEmits = ["copy"] as const;
