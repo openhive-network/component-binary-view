@@ -12,6 +12,7 @@ declare module '@hiveio/component-binary-view' {
         <% it.properties.forEach((prop) => { %>
           <%= prop.name %><%= prop.default === '' ? '' : '?' %>: <%= prop.type %>;
         <% }) %>
+getSelectedRange: () => number;
       }, {}, {}, {}, {}, <%~ JSON.stringify(it.events.map(node => node.name)) %>>;
     }
   }

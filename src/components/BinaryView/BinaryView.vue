@@ -15,6 +15,8 @@ const store = useBinaryViewStore(BinaryViewIndex)
 
 const props = defineProps<IBinaryViewProps>()
 
+defineExpose({ getSelectedRange: () => store.focusHighlightRange });
+
 watch(props, () => {
   store.resetStore()
   store.setBytesInRow(Number.parseInt((props.rowbytes as string) ?? 16))

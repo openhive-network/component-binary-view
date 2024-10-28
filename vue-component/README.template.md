@@ -40,8 +40,8 @@ createApp(App)
 `plugins/binary-view.client.ts`:
 
 ```diff
-+ import '@hiveio/component-binary-view/styles';
-+ import BinaryView from '@hiveio/component-binary-view';
++ import '<%= it.name %>/styles';
++ import BinaryView from '<%= it.name %>';
 
 + export default defineNuxtPlugin((nuxtApp) => {
 +   nuxtApp.vueApp.use(BinaryView);
@@ -71,6 +71,30 @@ createApp(App)
 <% for(const event of it.events) { %>
 | `<%= event.name %>` | <%= event.description %> | `<%~ event.example %>` |
 <% } %>
+
+### Component exposed functions
+
+#### Retrieving selected range
+
+Binary View components exposes `getSelectedRange` function, which can be useful when implementing custom buttons (e.g. save to file). It takes no arguments and returns object with two properties: `start` and `end` denoting begin and end of selection in bytes. Example code:
+
+```vue
+<script setup lang="ts">
+import { useTemplateRef } from 'vue';
+import type { BinaryViewComponent } from '<%= it.name %>';
+
+const binaryView = useTemplateRef<BinaryViewComponent>('binaryViewNode');
+
+const alertSelectedRange = () => {
+  alert(JSON.stringify(binaryView.value!.getSelectedRange()));
+};
+</script>
+
+<template>
+  <button @click="alertSelectedRange">Alert selected range</button>
+  <BinaryView :data="data" ref="binaryViewNode" rootnode="transaction" dark />
+</template>
+```
 
 ## Web component
 
