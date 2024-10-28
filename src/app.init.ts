@@ -1,4 +1,4 @@
-import { createPinia, getActivePinia } from "pinia";
+import { createPinia } from "pinia";
 import { type App, type DirectiveBinding } from "vue";
 
 type ClickOutsideElement = HTMLElement & { clickOutsideEvent: (event: MouseEvent) => void };

@@ -12,6 +12,7 @@ const props = defineProps<{
 
 const store = useBinaryViewStore(props.index)
 
+// eslint-disable-next-line vue/no-dupe-keys
 const { index, nestedLevel, colors, key, displayValue, range } = store.nextData('KeyProp')
 
 const leaveFocusHighlight = () => {
