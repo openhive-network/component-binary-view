@@ -22,7 +22,7 @@ const emit = defineEmits(['copy'])
 
 <template>
   <div class="bvc-tw-flex bvc-tw-flex-col bvc-tw-gap-1">
-    <Tooltip text="Copy binary selected range" side="right">
+    <Tooltip text="Download binary (ASCII) selected range" side="right">
       <Button
         @click="store.copyBinary(), emit('copy')"
         :disabled="store.focusHighlightRange.start < 0"

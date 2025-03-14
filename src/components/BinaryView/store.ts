@@ -45,7 +45,9 @@ export const useIndexingBinaryViewStore = defineStore('binaryViewIndexed', {
 const copy = (text: string) => {
   try {
     if (navigator.clipboard) { // is secure context
-      return navigator.clipboard.writeText(text);
+      return navigator.clipboard.writeText(text).catch(() => {
+        prompt("Copy to clipboard: Ctrl+C, Enter", text);
+      });
     } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) { // check if we can use deprecated copy command
       const textarea = document.createElement("textarea");
       textarea.textContent = text;
@@ -65,6 +67,14 @@ const copy = (text: string) => {
   } catch {
     prompt("Copy to clipboard: Ctrl+C, Enter", text);
   }
+}
+
+const downloadBinary = (blob: Blob) => {
+  const aElement = document.createElement('a');
+  document.body.appendChild(aElement);
+  aElement.download = "transaction.bin";
+  aElement.href = URL.createObjectURL(blob);
+  aElement.click();
 }
 
 export const useBinaryViewStore = (storeKeyIndex: number) => (defineStore(`binaryView-${storeKeyIndex}`, {
@@ -159,7 +169,7 @@ export const useBinaryViewStore = (storeKeyIndex: number) => (defineStore(`binar
       this.nodeValues = {};
       this.currentIndex = {};
       this.rangeData = {};
-      this.unfolded = {};
+      // this.unfolded = {}; // Do not reset unfolded state - it should be kept between data changes to prevent automatically folding all nodes on
       this.data = {} as IBinaryView;
       this.highlightedRange = {
         start: -1,
@@ -239,11 +249,9 @@ export const useBinaryViewStore = (storeKeyIndex: number) => (defineStore(`binar
     copyBinary() {
       const hex = this.data.binary.slice(this.focusHighlightRange.start, this.focusHighlightRange.end).match(/.{1,2}/g) as RegExpMatchArray;
 
-      const bytes = hex.map(node => String.fromCharCode(Number.parseInt(node, 16)));
+      const bytes = new Uint8Array(hex.map(node => Number.parseInt(node, 16)));
 
-      const binaryString = bytes.join('');
-
-      copy(binaryString);
+      downloadBinary(new Blob([bytes], { type: 'application/octet-stream' }));
     }
   }
 })());
