@@ -22,7 +22,7 @@
     "format": "prettier --write src/"
   },
   "devDependencies": {
-    "@hiveio/wax": "1.27.6-rc5-241028135811",
+    "@hiveio/wax": "1.27.6-rc7-stable.250306142932",
     "@mdi/font": "7.4.47",
     "@mdi/js": "^7.4.47",
     "@rushstack/eslint-patch": "^1.8.0",

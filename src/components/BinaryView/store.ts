@@ -34,6 +34,39 @@ export const useIndexingBinaryViewStore = defineStore('binaryViewIndexed', {
   }
 });
 
+/**
+ * Copies given text into clipboard.
+ *
+ * This function supports 3 ways of copying and fallbacks if any of them fails:
+ * 1. Using the modern Clipboard API (navigator.clipboard.writeText) - on most browsers works only in secure context (HTTPS) or localhost
+ * 2. Using the deprecated document.execCommand("copy") - deprecated, but still supported by most browsers - with Firefox works only on "click" event triggered by the user
+ * 3. Using the prompt function - the most universal way, but requires user interaction
+ */
+const copy = (text: string) => {
+  try {
+    if (navigator.clipboard) { // is secure context
+      return navigator.clipboard.writeText(text);
+    } else if (document.queryCommandSupported && document.queryCommandSupported("copy")) { // check if we can use deprecated copy command
+      const textarea = document.createElement("textarea");
+      textarea.textContent = text;
+      textarea.style.width = "0";
+      textarea.style.height = "0";
+      textarea.style.position = "fixed"; // Prevent scrolling to bottom of page in MS Edge.
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        if(!document.execCommand("copy")) // Security exception may be thrown by some browsers.
+          throw new Error("Copy command was unsuccessful");
+      } finally {
+        document.body.removeChild(textarea);
+      }
+    }
+    throw new Error("No clipboard support");
+  } catch {
+    prompt("Copy to clipboard: Ctrl+C, Enter", text);
+  }
+}
+
 export const useBinaryViewStore = (storeKeyIndex: number) => (defineStore(`binaryView-${storeKeyIndex}`, {
   state: () => ({
     /* Private props: */
@@ -190,7 +223,7 @@ export const useBinaryViewStore = (storeKeyIndex: number) => (defineStore(`binar
     copyHex() {
       const hex = this.data.binary.slice(this.focusHighlightRange.start, this.focusHighlightRange.end);
 
-      navigator.clipboard.writeText(hex);
+      copy(hex);
     },
     foldAll() {
       for (const index in this.unfolded)
@@ -203,11 +236,11 @@ export const useBinaryViewStore = (storeKeyIndex: number) => (defineStore(`binar
     copyBinary() {
       const hex = this.data.binary.slice(this.focusHighlightRange.start, this.focusHighlightRange.end).match(/.{1,2}/g) as RegExpMatchArray;
 
-      const bytes = new Uint8Array(hex as any).map(byte => parseInt(String(byte), 16));
+      const bytes = hex.map(node => String.fromCharCode(Number.parseInt(node, 16)));
 
-      const binaryString = String.fromCharCode.apply(null, bytes as any);
+      const binaryString = bytes.join('');
 
-      navigator.clipboard.writeText(binaryString);
+      copy(binaryString);
     }
   }
 })());

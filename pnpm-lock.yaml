@@ -16,8 +16,8 @@ importers:
         version: 3.5.11(typescript@5.4.5)
     devDependencies:
       '@hiveio/wax':
-        specifier: 1.27.6-rc5-241028135811
-        version: 1.27.6-rc5-241028135811
+        specifier: 1.27.6-rc7-stable.250306142932
+        version: 1.27.6-rc7-stable.250306142932
       '@mdi/font':
         specifier: 7.4.47
         version: 7.4.47
@@ -441,13 +441,13 @@ packages:
   '@floating-ui/vue@1.1.5':
     resolution: {integrity: sha512-ynL1p5Z+woPVSwgMGqeDrx6HrJfGIDzFyESFkyqJKilGW1+h/8yVY29Khn0LaU6wHBRwZ13ntG6reiHWK6jyzw==}
 
-  '@hiveio/beekeeper@1.27.6-rc4':
-    resolution: {integrity: sha1-mj3k3qAgTdIrc6IxzC5VOprhWZs=, tarball: https://gitlab.syncad.com/api/v4/projects/198/packages/npm/@hiveio/beekeeper/-/@hiveio/beekeeper-1.27.6-rc4.tgz}
-    engines: {node: '>= 18'}
+  '@hiveio/beekeeper@1.27.10-stable.250305202831':
+    resolution: {integrity: sha1-mPx0QrDh3NSPSOYGyR1SUyi3lyA=, tarball: https://gitlab.syncad.com/api/v4/projects/198/packages/npm/@hiveio/beekeeper/-/@hiveio/beekeeper-1.27.10-stable.250305202831.tgz}
+    engines: {node: ^20.11 || >= 21.2}
 
-  '@hiveio/wax@1.27.6-rc5-241028135811':
-    resolution: {integrity: sha1-GjlZRVvdwXU2vIhnQMF9tQRI8Ao=, tarball: https://gitlab.syncad.com/api/v4/projects/419/packages/npm/@hiveio/wax/-/@hiveio/wax-1.27.6-rc5-241028135811.tgz}
-    engines: {node: '>= 18'}
+  '@hiveio/wax@1.27.6-rc7-stable.250306142932':
+    resolution: {integrity: sha1-2PeYuU5MtuuChX4H3GwAEf7TJEQ=, tarball: https://gitlab.syncad.com/api/v4/projects/419/packages/npm/@hiveio/wax/-/@hiveio/wax-1.27.6-rc7-stable.250306142932.tgz}
+    engines: {node: ^20.11 || >= 21.2}
 
   '@humanwhocodes/config-array@0.13.0':
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
@@ -697,9 +697,6 @@ packages:
 
   '@types/node@20.16.11':
     resolution: {integrity: sha512-y+cTCACu92FyA5fgQSAI8A1H429g7aSK2HsO7K4XYUWc4dY5IUz55JSDIYT6/VsOLfGy8vmvQYC2hfb0iF16Uw==}
-
-  '@types/validator@13.12.2':
-    resolution: {integrity: sha512-6SlHBzUW8Jhf3liqrGGXyTJSIFe4nqlJ5A5KaMZ2l/vbM3Wh3KSybots/wfWVzNLK4D1NZluDlSQIbIEPx6oyA==}
 
   '@types/web-bluetooth@0.0.20':
     resolution: {integrity: sha512-g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==}
@@ -966,12 +963,6 @@ packages:
   chokidar@4.0.1:
     resolution: {integrity: sha512-n8enUVCED/KVRQlab1hr3MVpcVMvxtZjmEa956u+4YijlmQED223XMSYj2tLuKvr4jcCTzNNMpQDUer72MMmzA==}
     engines: {node: '>= 14.16.0'}
-
-  class-transformer@0.5.1:
-    resolution: {integrity: sha512-SQa1Ws6hUbfC98vKGxZH3KFY0Y1lm5Zm0SY8XX9zbK7FJCyVEac3ATW0RIpwzW+oOfmHE5PMPufDG9hCfoEOMw==}
-
-  class-validator@0.14.1:
-    resolution: {integrity: sha512-2VEG9JICxIqTpoK1eMzZqaV+u/EiwEJkMGzTrZf6sU/fwsnOITVgYJ8yojSy6CaXtO9V0Cc6ZQZ8h8m4UBuLwQ==}
 
   class-variance-authority@0.7.0:
     resolution: {integrity: sha512-jFI8IQw4hczaL4ALINxqLEXQbWcNjoSkloa4IaufXCJr6QawJyw7tuRysRsrE8w2p/4gGaxKIt/hX3qz/IbD1A==}
@@ -1340,9 +1331,6 @@ packages:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
 
-  libphonenumber-js@1.11.11:
-    resolution: {integrity: sha512-mF3KaORjJQR6JBNcOkluDcJKhtoQT4VTLRMrX1v/wlBayL4M8ybwEDeryyPcrSEJmD0rVwHUbBarpZwN5NfPFQ==}
-
   lilconfig@2.1.0:
     resolution: {integrity: sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ==}
     engines: {node: '>=10'}
@@ -1618,9 +1606,6 @@ packages:
     resolution: {integrity: sha512-yDMz9g+VaZkqBYS/ozoBJwaBhTbZo3UNYQHNRw1D3UFQB8oHB4uS/tAODO+ZLjGWmUbKnIlOWO+aaIiAxrUWHA==}
     engines: {node: '>= 14.16.0'}
 
-  reflect-metadata@0.1.14:
-    resolution: {integrity: sha512-ZhYeb6nRaXCfhnndflDK8qI6ZQ/YcWZCISRAWICW9XYqMUwjZM9Z0DveWX/ABN01oxSHwVxKQmxeYZSsm0jh5A==}
-
   resolve-from@4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
     engines: {node: '>=4'}
@@ -1810,10 +1795,6 @@ packages:
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
-
-  validator@13.12.0:
-    resolution: {integrity: sha512-c1Q0mCiPlgdTVVVIJIrBuxNicYE+t/7oKeI9MWLj3fh/uq2Pxh/3eeWbVZ4OcGW1TUf53At0njHw5SMdA3tmMg==}
-    engines: {node: '>= 0.10'}
 
   vite-plugin-vuetify@2.0.4:
     resolution: {integrity: sha512-A4cliYUoP/u4AWSRVRvAPKgpgR987Pss7LpFa7s1GvOe8WjgDq92Rt3eVXrvgxGCWvZsPKziVqfHHdCMqeDhfw==}
@@ -2142,16 +2123,13 @@ snapshots:
       - '@vue/composition-api'
       - vue
 
-  '@hiveio/beekeeper@1.27.6-rc4': {}
+  '@hiveio/beekeeper@1.27.10-stable.250305202831': {}
 
-  '@hiveio/wax@1.27.6-rc5-241028135811':
+  '@hiveio/wax@1.27.6-rc7-stable.250306142932':
     dependencies:
-      '@hiveio/beekeeper': 1.27.6-rc4
-      class-transformer: 0.5.1
-      class-validator: 0.14.1
+      '@hiveio/beekeeper': 1.27.10-stable.250305202831
       events: 3.3.0
       long: 5.2.3
-      reflect-metadata: 0.1.14
 
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
@@ -2352,8 +2330,6 @@ snapshots:
     dependencies:
       undici-types: 6.19.8
 
-  '@types/validator@13.12.2': {}
-
   '@types/web-bluetooth@0.0.20': {}
 
   '@typescript-eslint/eslint-plugin@7.18.0(@typescript-eslint/parser@7.18.0(eslint@8.57.1)(typescript@5.4.5))(eslint@8.57.1)(typescript@5.4.5)':
@@ -2553,7 +2529,7 @@ snapshots:
 
   '@vue/tsconfig@0.5.1': {}
 
-  '@vuetify/loader-shared@2.0.3(vue@3.5.11(typescript@5.4.5))(vuetify@3.7.2(typescript@5.4.5)(vite-plugin-vuetify@2.0.4)(vue@3.5.11(typescript@5.4.5)))':
+  '@vuetify/loader-shared@2.0.3(vue@3.5.11(typescript@5.4.5))(vuetify@3.7.2)':
     dependencies:
       upath: 2.0.1
       vue: 3.5.11(typescript@5.4.5)
@@ -2684,14 +2660,6 @@ snapshots:
     dependencies:
       readdirp: 4.0.2
     optional: true
-
-  class-transformer@0.5.1: {}
-
-  class-validator@0.14.1:
-    dependencies:
-      '@types/validator': 13.12.2
-      libphonenumber-js: 1.11.11
-      validator: 13.12.0
 
   class-variance-authority@0.7.0:
     dependencies:
@@ -3097,8 +3065,6 @@ snapshots:
       prelude-ls: 1.2.1
       type-check: 0.4.0
 
-  libphonenumber-js@1.11.11: {}
-
   lilconfig@2.1.0: {}
 
   lilconfig@3.1.2: {}
@@ -3333,8 +3299,6 @@ snapshots:
   readdirp@4.0.2:
     optional: true
 
-  reflect-metadata@0.1.14: {}
-
   resolve-from@4.0.0: {}
 
   resolve-pkg-maps@1.0.0: {}
@@ -3549,11 +3513,9 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  validator@13.12.0: {}
-
   vite-plugin-vuetify@2.0.4(vite@5.4.8(@types/node@20.16.11)(sass@1.80.3)(terser@5.36.0))(vue@3.5.11(typescript@5.4.5))(vuetify@3.7.2):
     dependencies:
-      '@vuetify/loader-shared': 2.0.3(vue@3.5.11(typescript@5.4.5))(vuetify@3.7.2(typescript@5.4.5)(vite-plugin-vuetify@2.0.4)(vue@3.5.11(typescript@5.4.5)))
+      '@vuetify/loader-shared': 2.0.3(vue@3.5.11(typescript@5.4.5))(vuetify@3.7.2)
       debug: 4.3.7
       upath: 2.0.1
       vite: 5.4.8(@types/node@20.16.11)(sass@1.80.3)(terser@5.36.0)
