@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import { Eta } from "eta";
 import packageJson from './package.json';
 import url from 'node:url';
