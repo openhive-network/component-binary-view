@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BinaryView from '@/components/BinaryView'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { createWaxFoundation } from '@hiveio/wax/vite'
 
 const transaction = ref('')
@@ -27,6 +27,20 @@ if (savedTx) {
   transaction.value = atob(savedTx)
   applyTransaction()
 }
+
+const rowbytes = ref<number>(16);
+const handleBytesChange = (width: number) => {
+  if (width >= 768)
+    rowbytes.value = 16;
+  else
+    rowbytes.value = 10;
+}
+onMounted(() => {
+  handleBytesChange(window.innerWidth);
+}),
+window.addEventListener('resize', () => {
+  handleBytesChange(window.innerWidth);
+}, true);
 </script>
 
 <template>
@@ -49,6 +63,6 @@ if (savedTx) {
       />
       <button @click="applyTransaction()">Apply</button>
     </header>
-    <BinaryView @copy="console.log('copied')" v-if="data.length > 0" rootnode="transaction" :dark="dark" :data="data" />
+    <BinaryView :rowbytes="rowbytes" @copy="console.log('copied')" v-if="data.length > 0" rootnode="transaction" :dark="dark" :data="data" />
   </main>
 </template>

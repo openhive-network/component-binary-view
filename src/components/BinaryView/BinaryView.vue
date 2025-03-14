@@ -38,7 +38,7 @@ store.indexBinaryData(
 <template>
   <div :class="['binary-data-body', { dark: String(props.dark) === 'true' }]">
     <BinaryDataHeader :index="BinaryViewIndex" class="bvc-tw-mb-4" />
-    <div class="binary-view-container" :key="store.data.binary">
+    <div class="binary-view-container bvc-tw-flex bvc-tw-flex-col bvc-tw-space-y-4 md:bvc-tw-space-y-0 md:bvc-tw-flex-row" :key="store.data.binary">
       <div class="binary-view-left-pane">
         <ActionButtons :index="BinaryViewIndex" @copy="emit('copy')" class="binary-view-left-pane-actions-buttons" />
         <div class="binary-view-left-pane-index">
@@ -47,7 +47,7 @@ store.indexBinaryData(
             v-for="(offset, index) in Math.ceil(store.data.binary.length / 2 / store.bytesInRow)"
             :key="offset"
           >
-            {{ store.setCase((index * 16).toString(16).padStart(6, '0')) }}:
+            {{ store.setCase((index * store.bytesInRow).toString(16).padStart(store.paddingZeros, '0')) }}:
           </div>
         </div>
         <div

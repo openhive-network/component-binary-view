@@ -77,6 +77,7 @@ export const useBinaryViewStore = (storeKeyIndex: number) => (defineStore(`binar
     currentIndex: {} as Record<string, number>,
     rangeData: {} as Record<number, IBufferRangeData>,
     data: {} as IBinaryView,
+    paddingZeros: 0,
     highlightedRange: {
       start: -1,
       end: -1
@@ -145,6 +146,8 @@ export const useBinaryViewStore = (storeKeyIndex: number) => (defineStore(`binar
       this.data = data;
 
       this.data.binary = this.setCase(this.data.binary);
+
+      this.paddingZeros = (this.data.binary.length/2).toString(16).length;
 
       for (const index of data.offsets)
         this.indexNode(index, 0);
