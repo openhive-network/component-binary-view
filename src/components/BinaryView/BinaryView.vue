@@ -5,7 +5,8 @@ import HexProp from './components/HexProp.vue'
 import KeyProp from './components/KeyProp.vue'
 import ActionButtons from './components/ActionButtons.vue'
 import { useIndexingBinaryViewStore, useBinaryViewStore } from './store'
-import { watch } from 'vue'
+import { ref, watch, onMounted } from 'vue';
+import { getHost } from './utils/shadowdom'
 
 const emit = defineEmits([...BinaryViewEmits])
 
@@ -33,14 +34,38 @@ store.indexBinaryData(
   props.rootnode ?? 'transaction',
   typeof props.data === 'object' ? props.data : (JSON.parse(props.data) as IBinaryView)
 )
+
+const binaryViewComponent = ref<HTMLElement | null>(null);
+let host: HTMLElement | null;
+
+const emitCopy = () => {
+  if (host)
+    host.dispatchEvent(new CustomEvent("copy"));
+  else
+    emit('copy');
+};
+
+onMounted(() => {
+  host = getHost(binaryViewComponent.value);
+  if (host)
+    Object.defineProperty(host, 'getSelectedRange', {
+      value: () => ({
+        start: store.focusHighlightRange.start,
+        end: store.focusHighlightRange.end
+      }),
+      writable: false,
+      enumerable: true,
+      configurable: true
+    });
+});
 </script>
 
 <template>
-  <div :class="['binary-data-body', { dark: String(props.dark) === 'true' }]">
+  <div ref="binaryViewComponent" :class="['binary-data-body', { dark: String(props.dark) === 'true' }]">
     <BinaryDataHeader :index="BinaryViewIndex" class="bvc-tw-mb-4" />
     <div class="binary-view-container bvc-tw-flex bvc-tw-flex-col bvc-tw-space-y-4 md:bvc-tw-space-y-0 md:bvc-tw-flex-row" :key="store.data.binary">
       <div class="binary-view-left-pane">
-        <ActionButtons :index="BinaryViewIndex" @copy="emit('copy')" class="binary-view-left-pane-actions-buttons" />
+        <ActionButtons :index="BinaryViewIndex" @copy="emitCopy" class="binary-view-left-pane-actions-buttons" />
         <div class="binary-view-left-pane-index">
           <div class="binary-view-left-pane-index-header">:</div>
           <div

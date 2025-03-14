@@ -72,8 +72,30 @@ export default function Home() {
 | Name | Description | Example |
 | ---- | ----------- | ------- |
 <% for(const event of it.events) { %>
-| `<%= event.name %>` | <%= event.description %> | `<%~ event.example %>` |
+| `<%= event.name %>` | <%= event.description %> | `node.addEventListener('<%= event.name %>', () => console.log('Got event <%= event.name %>'))` |
 <% } %>
+
+### Component exposed functions
+
+#### Retrieving selected range
+
+Binary View components exposes `getSelectedRange` function, which can be useful when implementing custom buttons (e.g. save to file). It takes no arguments and returns object with two properties: `start` and `end` denoting begin and end of selection in bytes. Example code:
+
+```html
+<!DOCTYPE html>
+<html>
+  <body>
+    <script src="<%= it.name %>-web-component" type="module"></script>
+    <binary-view data='{"binary":"80c6334ada743465b064012b076265657371636b01...}' dark />
+    <script>
+      const node = document.getElementsByTagName('binary-view')[0];
+      setInterval(() => {
+        console.log(node.getSelectedRange());
+      }, 1000); // Report every second the selected range
+    </script>
+  </body>
+</html>
+```
 
 ## Vue component
 
