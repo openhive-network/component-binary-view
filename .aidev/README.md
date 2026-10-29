@@ -17,10 +17,12 @@ Task and session branches never reach `aidev/integration` through merge requests
 lands them after its own verification. `aidev/integration` reaches `main` by this project's
 usual process, merge requests included — the platform never merges into any other branch.
 
-The project's own CI (`.gitlab-ci.yml`) runs `build` (`pnpm install` + `npm run build`) on every
-branch, so it also runs on `ai/*` and `session/*` branches; `pages` and `publish` run on `main`
-only. Its only job image is `node:18`; Node images are not pinned by this profile (the test
-runtime takes Node from common-ci-configuration), so there is no job image to pin by digest.
+The project's own CI (`.gitlab-ci.yml`) runs `build` (frozen `pnpm install`, `pnpm run build`
+and `pnpm run prepack`) and `examples` (each example's frozen install from its own lockfile and
+its build) on every branch, so they also run on `ai/*` and `session/*` branches; `pages` and
+`publish` run on `main` only. Its jobs run in common-ci-configuration's `node-test-tools:develop`
+(`NODE_TEST_TOOLS_IMAGE`), which gives Node and pnpm; the frozen installs fall back to an unfrozen
+one only when that repository's pnpm catalogs moved (`.pnpm_install_with_catalog_fallback`).
 
 ## Suites run before work lands
 
@@ -29,31 +31,33 @@ which writes `test-results/<slot>/junit.xml` (one case per step, the step's log 
 failure body). Every run first installs dependencies offline from the lockfile
 (`.aidev/pnpm-deps.sh`), one case `install`; the slots name the steps after it:
 
-- `quick` — lint typecheck build build-ce build-vue prepack
-- `full` — lint typecheck build build-ce build-vue prepack
+- `quick` — lint typecheck build build-ce build-vue prepack examples
+- `full` — lint typecheck build build-ce build-vue prepack examples
 - `baseline` — typecheck build build-ce build-vue
-- `canary` — lint typecheck build build-ce build-vue prepack
+- `canary` — lint typecheck build build-ce build-vue prepack examples
 - `static` — lint typecheck
 - `coverage` — build build-ce build-vue
-- `system` — build build-ce build-vue prepack
+- `system` — build build-ce build-vue prepack examples
 
 Steps: `lint` is package.json's `lint` without `--fix` (so it reports instead of rewriting the
 tree); `typecheck` is `vue-tsc --build --force`; `build`, `build-ce` and `build-vue` are the three
 `vite build`s package.json's `build` runs in parallel (demo site into `dist/`, web component into
 `dist-wc/`, Vue plugin into `dist-vue/`), here one by one so each reports on its own; `prepack` is
 `pnpm run prepack` (`tsx render-package.ts` into `dist-wc/` and `dist-vue/`), CI's publish step
-before `npm publish`. The repository has **no tests**, so the slots repeat build evidence. There
-is no coverage tooling: `coverage` runs the builds.
-
-The examples under `example/` are not built by any slot: they have no lockfiles and install the
-local build through `file:../../dist-*`, so they cannot be installed offline. A change that
-gives them lockfiles should add a step for them (and rebuild the image).
+before `npm publish`; `examples` installs each example under `example/` offline from its own
+lockfile and builds it, as CI's `examples` job does. The examples install the local build through
+`file:../../dist-*`, so `examples` comes after `build-ce`, `build-vue` and `prepack`. The
+repository has **no tests**, so the slots repeat build evidence. There is no coverage tooling:
+`coverage` runs the builds.
 
 ## Test runtime
 
 `.aidev/runtime/Dockerfile` builds on common-ci-configuration's `node-test-tools:develop` (Node
 and pnpm come from there; this repository pins no Node of its own in it) and adds a pnpm store
-filled from `pnpm-lock.yaml` by `pnpm fetch`. Rebuild and re-pin it with
+filled by `pnpm fetch` from `pnpm-lock.yaml` and every example's lockfile. Each of them reads its
+versions from common-ci-configuration's pnpm catalogs through a `pnpm-workspace.yaml` symlink into
+the `npm-common-config` submodule, so a catalog bump there moves the lockfiles and the image with
+them. Rebuild and re-pin it with
 `.aidev/runtime/build.sh --push` when the Dockerfile or the files it copies change, or to follow a
 new `node-test-tools:develop`, and put the printed `repo@sha256:…` into `environment.image`.
 

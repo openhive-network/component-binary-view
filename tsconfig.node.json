@@ -7,7 +7,8 @@
     "nightwatch.conf.*",
     "playwright.config.*",
     "vue-component/vite.config.ts",
-    "web-component/vite.config.ts"
+    "web-component/vite.config.ts",
+    "web-component/postcss-shadow-root-properties.ts"
   ],
   "compilerOptions": {
     "composite": true,

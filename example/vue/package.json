@@ -11,8 +11,8 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
-    "pinia": "^2.2.4",
-    "vue": "^3.5.12",
+    "pinia": "catalog:vue-toolset",
+    "vue": "catalog:vue-toolset",
     "@hiveio/component-binary-view": "file:../../dist-vue"
   },
   "devDependencies": {
@@ -21,8 +21,8 @@
     "@vitejs/plugin-vue": "^5.1.4",
     "@vue/tsconfig": "^0.5.1",
     "npm-run-all2": "^6.2.3",
-    "typescript": "~5.5.4",
+    "typescript": "catalog:typescript-toolset",
     "vite": "^5.4.8",
-    "vue-tsc": "^2.1.6"
+    "vue-tsc": "catalog:vue-toolset"
   }
 }

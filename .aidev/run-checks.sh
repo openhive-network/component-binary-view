@@ -18,9 +18,11 @@
 #   build-vue  `vite build -c vue-component/vite.config.ts --outDir dist-vue`
 #   prepack    `pnpm run prepack` (tsx render-package.ts into dist-wc and
 #              dist-vue), CI's `publish` step before `npm publish`
-#
-# The examples under example/ are not built: they have no lockfiles and
-# install the local build by file:../../dist-*, so they cannot install offline.
+#   examples   each example under example/: `pnpm install --offline
+#              --frozen-lockfile` from its own lockfile, then `pnpm run build`,
+#              as CI's `examples` job does. They install the local build by
+#              file:../../dist-*, so this step runs after build-ce, build-vue
+#              and prepack.
 #
 # Runs offline in the image of .aidev/runtime/Dockerfile.
 set -uo pipefail
@@ -51,6 +53,15 @@ step() {
     return "$rc"
 }
 
+build_examples() {
+    local lock dir
+    for lock in example/*/pnpm-lock.yaml; do
+        dir="$(dirname "$lock")"
+        echo "== $dir"
+        ( cd "$dir" && pnpm install --offline --frozen-lockfile < /dev/null && pnpm run build ) || return 1
+    done
+}
+
 # The install is a case of its own: a lockfile the image's store cannot serve
 # fails here, not as a missing tool in a later step.
 t0=$SECONDS
@@ -70,6 +81,7 @@ for s in "$@"; do
         build-ce) step build-ce pnpm exec vite build -c web-component/vite.config.ts --outDir dist-wc ;;
         build-vue) step build-vue pnpm exec vite build -c vue-component/vite.config.ts --outDir dist-vue ;;
         prepack) step prepack pnpm run prepack ;;
+        examples) NEXT_TELEMETRY_DISABLED=1 NUXT_TELEMETRY_DISABLED=1 step examples build_examples ;;
         *) printf 'case\t%s\tfail\t0\tunknown step\n' "$s" >> "$cases"; status=1 ;;
     esac
 done
