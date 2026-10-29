@@ -29,3 +29,6 @@ example/**/pnpm-lock.yaml
 *.sw?
 
 *.tsbuildinfo
+
+# AIDEV suite output (.aidev/run-checks.sh)
+test-results/
