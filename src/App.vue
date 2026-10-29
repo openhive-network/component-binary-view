@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BinaryView from '@/components/BinaryView'
 import { ref, onMounted } from 'vue'
-import { createWaxFoundation } from '@hiveio/wax/vite'
+import { createWaxFoundation } from '@hiveio/wax'
 
 const transaction = ref('')
 const data = ref('')

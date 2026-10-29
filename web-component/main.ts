@@ -1,5 +1,5 @@
 import themeStyles from '../src/components/BinaryView/assets/styles.css?inline';
-import tailwindStyles from 'tailwindcss/tailwind.css?inline';
+import tailwindStyles from './tailwind.css?inline';
 import binaryViewStyles from '../src/components/BinaryView/BinaryView.css?inline';
 
 import { defineCustomElement as VueDefineCustomElement, h, createApp, getCurrentInstance, type App } from 'vue';

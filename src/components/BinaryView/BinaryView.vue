@@ -62,8 +62,10 @@ onMounted(() => {
 
 <template>
   <div ref="binaryViewComponent" :class="['binary-data-body', { dark: String(props.dark) === 'true' }]">
-    <BinaryDataHeader :index="BinaryViewIndex" class="bvc-tw-mb-4" />
-    <div class="binary-view-container bvc-tw-flex bvc-tw-flex-col bvc-tw-space-y-4 md:bvc-tw-space-y-0 md:bvc-tw-flex-row" :key="store.data.binary">
+    <BinaryDataHeader :index="BinaryViewIndex" class="bvc:mb-4" />
+    <!-- The margin goes on the second pane, as with Tailwind 3's space-y-4 (Tailwind 4's puts it on the first):
+         the web component keeps the panes in a row on narrow screens too -->
+    <div class="binary-view-container bvc:flex bvc:flex-col bvc:[&>*+*]:mt-4 bvc:md:[&>*+*]:mt-0 bvc:md:flex-row" :key="store.data.binary">
       <div class="binary-view-left-pane">
         <ActionButtons :index="BinaryViewIndex" @copy="emitCopy" class="binary-view-left-pane-actions-buttons" />
         <div class="binary-view-left-pane-index">

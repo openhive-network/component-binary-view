@@ -10,9 +10,8 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "nuxt": "^3.13.2",
-    "vue": "latest",
-    "vue-router": "latest",
+    "nuxt": "catalog:vue-toolset",
+    "vue": "catalog:vue-toolset",
     "@hiveio/component-binary-view": "file:../../dist-vue"
   }
 }

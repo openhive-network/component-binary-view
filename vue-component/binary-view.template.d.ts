@@ -5,17 +5,21 @@ declare module '@hiveio/component-binary-view' {
     install(app: App): void;
   };
 
-  // Extend the global Vue component types
-  module '@vue/runtime-core' {
-    export interface GlobalComponents {
-      BinaryView: ComponentPublicInstance<{
+  export type BinaryViewComponent = ComponentPublicInstance<{
         <% it.properties.forEach((prop) => { %>
           <%= prop.name %><%= prop.default === '' ? '' : '?' %>: <%= prop.type %>;
         <% }) %>
 getSelectedRange: () => number;
       }, {}, {}, {}, {}, <%~ JSON.stringify(it.events.map(node => node.name)) %>>;
+
+  // Extend the global Vue component types
+  module '@vue/runtime-core' {
+    export interface GlobalComponents {
+      BinaryView: BinaryViewComponent;
     }
   }
 
   export default BinaryView;
 }
+
+declare module '@hiveio/component-binary-view/styles';

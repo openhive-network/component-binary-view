@@ -18,8 +18,11 @@ set -euo pipefail
 cd "$(dirname "$0")/../.."
 REPOSITORY="${AIDEV_RUNTIME_REPOSITORY:-registry.gitlab.syncad.com/hive/component-binary-view/aidev-tests}"
 BASE_IMAGE="$(sed -n 's/^ARG BASE_IMAGE=//p' .aidev/runtime/Dockerfile)"
-# The files the Dockerfile copies (its build context holds only these).
-CONTEXT_FILES=(package.json pnpm-lock.yaml .npmrc)
+# The files the Dockerfile copies (its build context holds only these, at their
+# paths in the repository): the root's and every example's manifest, lockfile
+# and pnpm-workspace.yaml (a symlink to the ccc submodule's catalogs).
+CONTEXT_FILES=(package.json pnpm-lock.yaml .npmrc pnpm-workspace.yaml
+    example/*/package.json example/*/pnpm-lock.yaml example/*/pnpm-workspace.yaml)
 INPUTS=(.aidev/runtime/Dockerfile "${CONTEXT_FILES[@]}")
 input_hash() {
     local base_digest
@@ -50,7 +53,7 @@ echo "$REPOSITORY:$TAG is not in the registry; building it" >&2
 context="$(mktemp -d)"
 trap 'rm -rf "$context"' EXIT
 # Only the files the Dockerfile copies: the repository root holds node_modules.
-cp -L "${CONTEXT_FILES[@]}" "$context/"
+cp -L --parents "${CONTEXT_FILES[@]}" "$context/"
 build=(docker buildx build --pull --provenance=false -f .aidev/runtime/Dockerfile -t "$REPOSITORY:$TAG")
 [ -z "${AIDEV_RUNTIME_BUILDER:-}" ] || build+=(--builder "$AIDEV_RUNTIME_BUILDER")
 if [ "${1:-}" != "--push" ]; then
