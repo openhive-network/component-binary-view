@@ -27,7 +27,7 @@ branches:
 # The image is .aidev/runtime/Dockerfile, built and pinned by .aidev/runtime/build.sh.
 environment:
   kind: "container"
-  image: "registry.gitlab.syncad.com/hive/component-binary-view/aidev-tests@sha256:69e253be92646568893b62a9ec59b86c06d5daa25478f982e4c322da698f4703"
+  image: "registry.gitlab.syncad.com/hive/component-binary-view/aidev-tests@sha256:8bfdc8665d0533d678b0763ae295c7b4e22631cee9fb50e7f13eff70c5ad65e6"
   inputs:
     - "package.json"
     - "pnpm-lock.yaml"
