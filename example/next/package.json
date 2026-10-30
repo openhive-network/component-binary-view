@@ -7,11 +7,11 @@
   },
   "dependencies": {
     "@hiveio/component-binary-view-web-component": "file:../../dist-wc",
-    "next": "latest",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "next": "catalog:react-toolset",
+    "react": "catalog:react-toolset",
+    "react-dom": "catalog:react-toolset"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20.9.0"
   }
 }

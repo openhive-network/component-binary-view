@@ -3,8 +3,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { UserConfig } from 'vite'
 import Vue from '@vitejs/plugin-vue'
 
-import tailwind from 'tailwindcss'
-import autoprefixer from 'autoprefixer';
+import tailwindcss from '@tailwindcss/postcss'
 
 // https://vitejs.dev/config/
 const userConfig: UserConfig = {
@@ -13,7 +12,7 @@ const userConfig: UserConfig = {
   ],
   css: {
     postcss: {
-      plugins: [tailwind(), autoprefixer()],
+      plugins: [tailwindcss()],
     },
   },
   resolve: {

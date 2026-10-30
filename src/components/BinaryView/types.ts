@@ -1,4 +1,4 @@
-import type { IBinaryViewNode } from "@hiveio/wax/vite";
+import type { IBinaryViewNode } from "@hiveio/wax";
 
 export type TNode = IBinaryViewNode;
 

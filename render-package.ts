@@ -60,13 +60,23 @@ const properties: Array<{ name: TBinaryViewPropKeys; type: string; default: stri
   }
 ];
 
+// package.json takes its versions from pnpm catalogs (`catalog:<name>`), which only pnpm
+// resolves: the published package names the installed version as a caret range instead.
+const readInstalledVersion = (name: string): string =>
+  (JSON.parse(fs.readFileSync(path.join(__dirname, 'node_modules', name, 'package.json'), 'utf8')) as { version: string }).version;
+
+const dependencies = Object.fromEntries(
+  Object.entries(packageJson.dependencies).map(([name, version]: [string, string]) =>
+    [name, version.startsWith('catalog:') ? `^${readInstalledVersion(name)}` : version])
+);
+
 const it = {
   name: packageJson.name,
   description: packageJson.description,
   version: packageJson.version,
   author: packageJson.author,
   license: packageJson.license,
-  dependencies: packageJson.dependencies,
+  dependencies,
   events,
   properties
 }

@@ -13,13 +13,19 @@ Supports multiple deployment formats:
 
 ## Tech Stack
 
-- **Vue 3** (3.4.29) - UI framework with Composition API
-- **Pinia** (2.2.4) - State management
-- **TypeScript** (5.4.0) - Static typing
+- **Vue 3** - UI framework with Composition API
+- **Pinia** - State management
+- **TypeScript** - Static typing
 - **Vite** (5.3.1) - Build tool
-- **Tailwind CSS** (3.4.14) - Styling with `bvc-tw-` prefix
+- **Tailwind CSS** (4) - Styling with the `bvc` prefix (`bvc:flex`)
 - **Radix Vue** (1.9.7) - Headless UI primitives
 - **@hiveio/wax** - Transaction binary conversion library
+
+Vue, Pinia, Vuetify, vue-tsc, Tailwind, TypeScript, tsx, wax, React and Next come from the pnpm
+catalogs of hive/common-ci-configuration (`npm-common-config` submodule, branch `develop`):
+package.json files reference them as `catalog:<name>`, never with a version. The root and every
+example have a `pnpm-workspace.yaml` symlink to `npm-common-config/pnpm-config/pnpm-workspace.yaml`
+and their own `pnpm-lock.yaml`. Clone with `--recurse-submodules`.
 
 ## Directory Structure
 
@@ -77,7 +83,8 @@ pnpm prepack          # Generate package.json/README from templates
 | `web-component/main.ts` | Web Component wrapper |
 | `vue-component/main.ts` | Vue plugin export |
 | `vite.config.base.ts` | Shared Vite configuration |
-| `tailwind.config.js` | Tailwind with `bvc-tw-` prefix |
+| `src/components/BinaryView/assets/tailwind.css` | Tailwind theme, `bvc` prefix, sources |
+| `web-component/tailwind.css` | Preflight + utilities for the web component's shadow root |
 | `render-package.ts` | Template rendering (Eta) for package.json/README |
 
 ## Coding Conventions
@@ -88,8 +95,9 @@ pnpm prepack          # Generate package.json/README from templates
 - Path alias `@/` points to `/src/`
 
 **Tailwind CSS:**
-- All utilities prefixed with `bvc-tw-` to prevent conflicts
-- Dark mode via class-based (`dark:` variant)
+- All utilities prefixed with `bvc:` to prevent conflicts (Tailwind 4 prefixes are letters only)
+- Not in cascade layers: as with Tailwind 3, source order decides between utilities and `BinaryView.css`
+- Dark mode via class-based (`dark:` variant, the `dark` class on `.binary-data-body`), which also switches the CSS variables
 - CSS variables for theming (HSL format)
 
 **TypeScript:**
@@ -112,7 +120,7 @@ pnpm prepack          # Generate package.json/README from templates
 
 | Stage | Purpose |
 |-------|---------|
-| build | TypeScript check, build all outputs |
+| build | TypeScript check, build all outputs; `examples` builds every example from its frozen lockfile |
 | deploy | GitLab Pages (main only), npm publish (main only) |
 
 **Cache:** Based on `pnpm-lock.yaml`, caches `node_modules/` and `.pnpm-store/`

@@ -1,6 +1,4 @@
-/* @tailwind base; */
-@tailwind components;
-@tailwind utilities;
+@import './tailwind.css';
 
 /* @layer base { */
   .binary-data-body {
@@ -70,9 +68,9 @@
 
 /* @layer base { */
   .binary-data-body * {
-    @apply bvc-tw-border-border;
+    @apply bvc:border-border;
   }
   .binary-data-body {
-    @apply bvc-tw-text-foreground;
+    @apply bvc:text-foreground;
   }
 /* } */

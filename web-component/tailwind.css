@@ -1,0 +1,4 @@
+/* Tailwind's base styles for the shadow root, followed by the component's utilities,
+   in the order Tailwind 3's `tailwindcss/tailwind.css` gave them. */
+@import 'tailwindcss/preflight.css';
+@import '../src/components/BinaryView/assets/tailwind.css';

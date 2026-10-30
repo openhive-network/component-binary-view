@@ -1,4 +1,8 @@
-image: node:18
+include:
+  # NODE_TEST_TOOLS_IMAGE (Node and pnpm) and .pnpm_install_with_catalog_fallback
+  - project: 'hive/common-ci-configuration'
+    ref: develop
+    file: '/templates/npm_projects.gitlab-ci.yml'
 
 stages:
   - build
@@ -7,7 +11,12 @@ stages:
 variables:
   GIT_DEPTH: 0
   GIT_STRATEGY: clone
+  # npm-common-config tracks common-ci-configuration's develop, whose pnpm catalogs
+  # (pnpm-workspace.yaml) pin the versions of every catalog: dependency
   GIT_SUBMODULE_STRATEGY: recursive
+  GIT_SUBMODULE_UPDATE_FLAGS: --remote
+
+image: "${NODE_TEST_TOOLS_IMAGE}"
 
 cache:
   key:
@@ -24,17 +33,42 @@ default:
 build:
   stage: build
   before_script:
-    - corepack enable
-    - corepack prepare pnpm@9.1.1 --activate
-    - pnpm config set store-dir .pnpm-store
-    - pnpm install
+    - pnpm config set store-dir "${CI_PROJECT_DIR}/.pnpm-store"
+    - !reference [.pnpm_install_with_catalog_fallback, script]
   script:
-    - npm run build
+    - pnpm run build
+    # package.json of dist-wc and dist-vue, which the examples install
+    - pnpm run prepack
   artifacts:
     paths:
       - 'dist'
       - 'dist-vue'
       - 'dist-wc'
+      - pnpm-lock.catalog-refreshed.yaml
+    when: always
+    expire_in: 1 week
+
+examples:
+  stage: build
+  needs:
+    - job: build
+      artifacts: true
+  parallel:
+    matrix:
+      - EXAMPLE: [next, nuxt, react, vue, vue-multiple-operations]
+  variables:
+    NEXT_TELEMETRY_DISABLED: "1"
+    NUXT_TELEMETRY_DISABLED: "1"
+  cache: []
+  before_script:
+    - pnpm config set store-dir "${CI_PROJECT_DIR}/.pnpm-store"
+    - cd "example/${EXAMPLE}"
+    - !reference [.pnpm_install_with_catalog_fallback, script]
+  script:
+    - pnpm run build
+  artifacts:
+    paths:
+      - pnpm-lock.catalog-refreshed.yaml
     when: always
     expire_in: 1 week
 
@@ -52,10 +86,8 @@ pages:
 publish:
   stage: deploy
   before_script:
-    - corepack enable
-    - corepack prepare pnpm@9.1.1 --activate
-    - pnpm config set store-dir .pnpm-store
-    - pnpm install
+    - pnpm config set store-dir "${CI_PROJECT_DIR}/.pnpm-store"
+    - !reference [.pnpm_install_with_catalog_fallback, script]
   script:
     - echo "@hiveio:registry=https://gitlab.syncad.com/api/v4/projects/${CI_PROJECT_ID}/packages/npm/" > dist-vue/.npmrc
     - echo "//gitlab.syncad.com/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> dist-vue/.npmrc

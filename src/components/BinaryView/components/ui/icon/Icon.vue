@@ -15,7 +15,7 @@ const props = defineProps<{
     :height="props.size ?? 24"
     viewBox="0 0 24 24"
     style="fill: hsl(var(--foreground))"
-    :class="cn('bvc-tw-inline-block', props.class)"
+    :class="cn('bvc:inline-block', props.class)"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path :d="props.icon" />

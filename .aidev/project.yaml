@@ -27,8 +27,17 @@ branches:
 # The image is .aidev/runtime/Dockerfile, built and pinned by .aidev/runtime/build.sh.
 environment:
   kind: "container"
-  image: "registry.gitlab.syncad.com/hive/component-binary-view/aidev-tests@sha256:a3305a95dfe8e3f220e3fc521b8bb82cf89408d417488e0d92824fda98aa4181"
-  inputs: ["package.json", "pnpm-lock.yaml", ".npmrc"]
+  image: "registry.gitlab.syncad.com/hive/component-binary-view/aidev-tests@sha256:69e253be92646568893b62a9ec59b86c06d5daa25478f982e4c322da698f4703"
+  inputs:
+    - "package.json"
+    - "pnpm-lock.yaml"
+    - ".npmrc"
+    - ".aidev/runtime/Dockerfile"
+    - "example/next/pnpm-lock.yaml"
+    - "example/nuxt/pnpm-lock.yaml"
+    - "example/react/pnpm-lock.yaml"
+    - "example/vue/pnpm-lock.yaml"
+    - "example/vue-multiple-operations/pnpm-lock.yaml"
 
 issues:
   intake_label: todo
@@ -43,17 +52,18 @@ issues:
 # Verification slots. Each binding is what this project genuinely runs for
 # that slot — never one selection repeated under seven names, which makes
 # seven gates report on the same evidence while claiming to check seven
-# different things. This repository has no tests: its CI builds it
-# (`npm run build`). The slots install (frozen, offline), lint, typecheck and run
-# the three vite builds and the package rendering; see .aidev/README.md.
+# different things. This repository has no tests: its CI builds it and its
+# examples. The slots install (frozen, offline), lint, typecheck and run the
+# three vite builds, the package rendering and the examples' builds; see
+# .aidev/README.md.
 verification:
   quick:
     adapter: command
-    args: [".aidev/run-checks.sh", "quick", "lint", "typecheck", "build", "build-ce", "build-vue", "prepack"]
+    args: [".aidev/run-checks.sh", "quick", "lint", "typecheck", "build", "build-ce", "build-vue", "prepack", "examples"]
     artifacts: ["test-results/quick/"]
   full:
     adapter: command
-    args: [".aidev/run-checks.sh", "full", "lint", "typecheck", "build", "build-ce", "build-vue", "prepack"]
+    args: [".aidev/run-checks.sh", "full", "lint", "typecheck", "build", "build-ce", "build-vue", "prepack", "examples"]
     artifacts: ["test-results/full/"]
   baseline:
     adapter: command
@@ -61,7 +71,7 @@ verification:
     artifacts: ["test-results/baseline/"]
   canary:
     adapter: command
-    args: [".aidev/run-checks.sh", "canary", "lint", "typecheck", "build", "build-ce", "build-vue", "prepack"]
+    args: [".aidev/run-checks.sh", "canary", "lint", "typecheck", "build", "build-ce", "build-vue", "prepack", "examples"]
     artifacts: ["test-results/canary/"]
   static:
     adapter: command
@@ -73,7 +83,7 @@ verification:
     artifacts: ["test-results/coverage/"]
   system:
     adapter: command
-    args: [".aidev/run-checks.sh", "system", "build", "build-ce", "build-vue", "prepack"]
+    args: [".aidev/run-checks.sh", "system", "build", "build-ce", "build-vue", "prepack", "examples"]
     artifacts: ["test-results/system/"]
 
 # Capability grants for target-side code. Empty until this project needs one.
