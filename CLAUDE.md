@@ -9,7 +9,7 @@ Supports multiple deployment formats:
 - **Vue Component** - Vue 3 plugin
 - **Demo Website** - Static demo site
 
-**Version:** 0.4.0 | **License:** MIT
+**Version:** 0.5.0 | **License:** MIT
 
 ## Tech Stack
 
@@ -121,11 +121,12 @@ pnpm prepack          # Generate package.json/README from templates
 | Stage | Purpose |
 |-------|---------|
 | build | TypeScript check, build all outputs; `examples` builds every example from its frozen lockfile |
-| deploy | GitLab Pages (main only), npm publish (main only) |
+| deploy | GitLab Pages (main only), npm publish (main only; `publish-packages.sh` skips a version the registry already has) |
 
 **Cache:** Based on `pnpm-lock.yaml`, caches `node_modules/` and `.pnpm-store/`
 
-**Publish:** Publishes to GitLab npm registry using `CI_JOB_TOKEN`
+**Publish:** Publishes to GitLab npm registry using `CI_JOB_TOKEN`. Bump `version` in the root
+`package.json` (both dist packages take it) and add a `CHANGELOG.md` entry to release
 
 **Build outputs:**
 - `dist/` - Demo website (deployed to GitLab Pages)
